@@ -1,14 +1,11 @@
-import Card from "./components/Card"
-import Products from "./components/Products"
+import Products from "./components/Products";
 
 function App() {
-  
-
-  return (
-    <>
-      <Products />
-    </>
-  )
+	return (
+		<>
+			<Products data={[...Array(5)]} />
+		</>
+	);
 }
 
-export default App
+export default App;
