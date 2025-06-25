@@ -24,12 +24,12 @@ export default function TopBar() {
                 Need help? Call Us: <span className='text-main font-medium'>+ 0020 500</span>
             </p>
               <p className='flex text-[#3E445A] font-medium ps-2 sm:ps-[19px] border-s border-[#EDEEF5] h-full gap-x-2 sm:gap-x-[15px]'>
-                <p className='cursor-pointer'>
+                <span className='cursor-pointer block'>
                     English <i className="fa-solid fa-angle-down ps-1"></i>
-                </p>
-                <p className='cursor-pointer'>
+                </span>
+                <span className='cursor-pointer block'>
                     USD <i className="fa-solid fa-angle-down ps-1"></i>
-                </p>
+                </span>
             </p>
         </div>
       </div>

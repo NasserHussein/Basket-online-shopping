@@ -1,6 +1,8 @@
-import Card from "./Card";
+import Card from "../Card/Card";
 
 export default function Products({ data }) {
+	console.log(data);
+	
 	return (
 		<div className="border rounded overflow-hidden grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
 			{data.map((_, i) => (

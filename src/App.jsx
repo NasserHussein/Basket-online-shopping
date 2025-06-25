@@ -6,13 +6,12 @@ import Home from './components/Home/Home';
 
 const routers =createBrowserRouter([{
   path: '',element:<Layout/>, children:[
-    // {index: true, element:<Home/>},
+    {index: true, element:<Home/>},
   ]
 }]);
 function App() {
   return <>
   <RouterProvider router={routers}></RouterProvider>
-  return <>
   </>
 }
 

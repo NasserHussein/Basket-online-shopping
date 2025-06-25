@@ -38,7 +38,7 @@ export default function Card({
 		}
 	});
 	
-	return (
+	return <>
 		<div className="border-r  border-b relative p-5">
 			<div className="flex justify-center items-center flex-col">
 				<span className="bg-teal-500 px-3 py-1 text-white rounded-[4px] absolute top-3 left-3">
@@ -120,5 +120,5 @@ export default function Card({
 				add to cart
 			</button>
 		</div>
-	);
+	</>;
 }
