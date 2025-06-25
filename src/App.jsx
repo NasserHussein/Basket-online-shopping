@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -11,9 +10,9 @@ const routers =createBrowserRouter([{
   ]
 }]);
 function App() {
-
   return <>
   <RouterProvider router={routers}></RouterProvider>
+  return <>
   </>
 }
 
