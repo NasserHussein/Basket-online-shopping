@@ -25,7 +25,7 @@ export default function Card({
 }) {
 	const [heartClasses, setHeartClasses] = useState("text-rose-300");
 	const [isFavourite, setIsFavourite] = useState(false);
-	
+
 	const renderStarsWithGradient = (averageRating) => {
 		const totalStars = 5;
 		const stars = [];
@@ -45,9 +45,9 @@ export default function Card({
 				<StarSvg
 					key={`star-${i}`}
 					fillPercentage={fillPercentage}
-					size={20} 
-					filledColor="#FACC15" 
-					emptyColor="#D1D5DB" 
+					size={20}
+					filledColor="#FACC15"
+					emptyColor="#D1D5DB"
 				/>
 			);
 		}
