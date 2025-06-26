@@ -17,7 +17,7 @@ export default function NavBar() {
   ];
   return <>
     <TopBar/>
-    <nav className='container'>
+    <nav className='container mb-4'>
         <div className='flex justify-between items-center'>
           <div className='lg:w-[20%] w-[40%]'>
           <Link to='/'><img src={Logo} alt="basket logo" /></Link>
@@ -60,7 +60,7 @@ export default function NavBar() {
             <button onClick={()=> toggleState(openMenu, setOpenMenu)} className='cursor-pointer text-[#3E445A] text-xl lg:hidden'><i className="fa-solid fa-bars"></i></button>
           </div>
         </div>
-        <div className='mt-6 flex items-center'>
+      <div className='mt-6 flex items-center'>
         <div className='w-[25%] hidden lg:block cursor-pointer'>
           <div className='flex p-4 text-white bg-main rounded-full justify-center items-center'>
             <span className='block'><i className="fa-solid fa-bars pe-4"></i></span>
@@ -92,7 +92,7 @@ export default function NavBar() {
         </div>
       }
       {openMenu &&
-        <div onClick={()=> setOpenMenu(false)} className='bg-[#212529cc] absolute z-50 top-0 end-0 start-0 bottom-0 lg:hidden'>
+        <div onClick={()=> setOpenMenu(false)} className='bg-[#212529cc] z-50 fixed inset-0 lg:hidden'>
         <button className='cursor-pointer text-white text-3xl absolute md:end-[27%] md:top-[11%] end-[4%] top-[1%]'><i className="fa-solid fa-xmark"></i></button>
         <div onClick={(e) => e.stopPropagation()} className='bg-white absolute md:top-[20%] md:bottom-[20%] md:end-[30%] md:start-[30%] top-[10%] bottom-[10%] end-[10%] start-[10%] rounded-lg overflow-auto'>
             <ul className='space-y-5 font-medium ms-5 mt-5 text-xl flex justify-between items-center flex-col'>
@@ -108,5 +108,6 @@ export default function NavBar() {
         </div> 
       }
     </nav>
+    <hr/>
     </>
 }

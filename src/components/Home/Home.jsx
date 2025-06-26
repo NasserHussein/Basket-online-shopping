@@ -4,7 +4,9 @@ import Products from "../Products/Products";
 export default function Home() {
 	return (
 		<>
-			<Products data={[...Array(5)]} />
+			<div className="container">
+				<Products data={[...Array(6)]} />
+			</div>
 		</>
 	);
 }
