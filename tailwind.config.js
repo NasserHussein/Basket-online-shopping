@@ -10,9 +10,9 @@ export default {
       padding: {
         DEFAULT: '1rem',
         sm: '2rem',
-        md: '4rem',
-        lg: '8rem',
-        xl: '10rem',
+        md: '3rem',
+        lg: '4rem',
+        xl: '8rem',
       },
       screens: {
         sm: "740px",
