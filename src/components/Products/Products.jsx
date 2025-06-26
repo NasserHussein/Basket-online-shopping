@@ -11,7 +11,7 @@ export default function Products({ data }) {
 					img="/img.png"
 					price={25}
 					quantity={5}
-					ratingAverage={3.5}
+					ratingAverage={4.5}
 					ratingQuantity={23.5}
 					key={i}
 					title="title of product!"
