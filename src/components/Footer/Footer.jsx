@@ -10,13 +10,10 @@ import { features, Links } from './links';
 
 function Footer() {
 
-  return (
-
+  return <>
     <footer>
-
       <div className="w-full bg-[#35AFA0] pt-10">
-        <div className="w-[90%] mx-auto flex flex-col lg:flex-row items-center justify-between gap-10">
-
+        <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-10">
           <div className="text-center lg:text-left">
             <p className="text-gray-200">
               <span className="border-b-[1px]">$20 discount</span> for your first order
@@ -28,7 +25,6 @@ function Footer() {
               Join our email subscription now to get updates
               on promotions and coupons.
             </p>
-
             <div className="bg-white h-14 rounded-md p-1 flex items-center justify-between max-w-[400px] mx-auto lg:mx-0">
               <div className="pl-2 flex items-center gap-2 flex-1">
                 <HiOutlineMail className="text-gray-300 w-8 text-[20px]" />
@@ -56,7 +52,7 @@ function Footer() {
         </div>
       </div>
 
-      <div className="w-[90%] mx-auto py-6 border-b-[1px]">
+      <div className="container text-[13px] mx-auto py-6 border-b-[1px]">
         <div className="flex flex-wrap leading-8 lg:flex-nowrap items-center justify-center md:justify-around gap-4 md:gap-0">
 
           {features.map((feature, index) => (
@@ -74,7 +70,7 @@ function Footer() {
         </div>
       </div>
 
-      <div className="w-[90%] mx-auto text-gray-800 py-12 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      <div className="container text-gray-800 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
         {Links.map((category, index) => (
           <div key={index}>
             <h3 className="font-bold mb-4 uppercase text-sm">{category.title}</h3>
@@ -93,7 +89,7 @@ function Footer() {
       </div>
 
       <div className="bg-white">
-        <div className="w-[90%]  border-t pt-8 mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="container  border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-8">
 
           <div className="flex items-center gap-4">
             <img src={PhoneIcon} alt="phone icon" className="w-10 h-10" />
@@ -123,9 +119,9 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t my-6 w-[90%] mx-auto"></div>
+        <div className="border-t my-6 container mx-auto"></div>
 
-        <div className="w-[90%] mx-auto flex flex-col md:flex-row justify-between items-center gap-4 pb-8">
+        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4 pb-8">
 
           <p className="text-xs text-gray-400 text-center md:text-left">
             Copyright 2025 © All rights reserved by Blackrise Theme
@@ -144,7 +140,7 @@ function Footer() {
         </div>
       </div>
     </footer>
-  )
+    </>
 }
 
 export default Footer;
