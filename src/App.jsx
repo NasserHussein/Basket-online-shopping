@@ -3,6 +3,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const routers =createBrowserRouter([{
   path: '',element:<Layout/>, children:[
@@ -11,7 +13,9 @@ const routers =createBrowserRouter([{
 }]);
 function App() {
   return <>
-  <RouterProvider router={routers}></RouterProvider>
+  <Provider store={store}>
+    <RouterProvider router={routers}></RouterProvider>
+  </Provider>
   </>
 }
 
