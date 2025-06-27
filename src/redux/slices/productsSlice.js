@@ -6,7 +6,6 @@ let initialState = {isLoading:false, products: [], error:null};
 
 export let getProduct =  createAsyncThunk('products/getProduct', async ()=>{
     let {data} = await axios.get('https://ecommerce.routemisr.com/api/v1/products');
-    console.log(data.data);
     return data.data;
 });
 
