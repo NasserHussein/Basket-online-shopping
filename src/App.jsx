@@ -6,6 +6,10 @@ import Home from './components/Home/Home';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
+if (!localStorage.getItem("addedProducts")) {
+	localStorage.setItem("addedProducts", JSON.stringify([]));
+}
+
 const routers =createBrowserRouter([{
   path: '',element:<Layout/>, children:[
     {index: true, element:<Home/>},
