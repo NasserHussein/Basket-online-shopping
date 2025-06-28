@@ -17,7 +17,7 @@ export default function NavBar() {
   ];
   return <>
     <TopBar/>
-    <nav className='container mb-4'>
+    <nav className='container'>
         <div className='flex justify-between items-center'>
           <div className='lg:w-[20%] w-[40%]'>
           <Link to='/'><img src={Logo} alt="basket logo" /></Link>
