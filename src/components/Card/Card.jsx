@@ -121,7 +121,7 @@ export default function Card({
 								}`
 							)
 						}
-						className={`text-2xl transition-all  hover:text-rose-500 ${heartClasses}`}
+						className={`text-2xl transition-all hover:text-rose-500 ${heartClasses}`}
 					/>
 				</div>
 				<p className="text-gray-400 mt-5"> creaeted at {createdAt}</p>
