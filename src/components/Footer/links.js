@@ -2,12 +2,15 @@ import Vector1 from "../../assets/Vector (1).png"
 import Vector2 from "../../assets/Vector (2).png"
 import Vector3 from "../../assets/Vector (3).png"
 import Vector from "../../assets/Vector.png"
+
+
 export const features = [
     { icon: Vector, text: "Everyday fresh products", alt: "fresh products" },
     { icon: Vector1, text: "Free delivery for order over $70", alt: "Free delivery" },
     { icon: Vector2, text: "Daily Mega Discounts", alt: "Daily Mega Discounts" },
     { icon: Vector3, text: "Best price on the market", alt: "Best price" },
   ];
+
 export const Links = [
     {
       title: "Fruit & Vegetables",
