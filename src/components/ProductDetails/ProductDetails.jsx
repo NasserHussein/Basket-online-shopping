@@ -1,30 +1,34 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToWishlist } from "../../redux/slices/wishlistSlice";
-import { FaHeart, FaRegHeart, FaShareAlt, FaStar, FaTimes } from "react-icons/fa";
+import React, { useEffect, useState } from 'react'
+import { FaRegHeart, FaShareAlt, FaStar, FaTimes } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSpecificProduct, setShowModal } from '../../redux/slices/specificProductSlice';
+import Loading from '../Loading/Loading';
 
-const ProductDetails = () => {
-
-
-  const dispatch = useDispatch();
-  const [selectedImage, setSelectedImage] = useState(product.imageCover);
-  const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState("small");
-
-  const handleWishlist = () => {
-    dispatch(addToWishlist(product._id));
-  };
-
-  if (loading || !product) {
-    return <p className="text-center mt-10">Loading...</p>;
-  }
-
-  return (
-    <div className=" fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center overflow-auto p-4">
-      <div className="bg-white rounded-lg w-full max-w-4xl min-h-[80vh] overflow-y-auto p-3 md:p-6 relative">
+export default function ProductDetails({productID}) {
+    const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(1);
+    const [size, setSize] = useState("small");
+    const { isLoadin, product, showModal } = useSelector((Store) => Store.specificProductReducer)
+    const handleWishlist = () => {
+      dispatch(addToWishlist(product._id));
+    };
+    useEffect(()=>{
+      dispatch(getSpecificProduct(productID));
+    }, []);
+    
+    const [selectedImage, setSelectedImage] = useState(product.imageCover);
+    useEffect(() => {
+      if (product.imageCover) {
+        setSelectedImage(product.imageCover);
+      }
+    }, [product.imageCover]);
+  return <>
+  {isLoadin? <Loading/> : showModal ? 
+      <div className=" fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center overflow-auto p-4" onClick={() => dispatch(setShowModal(false))}>
+        <div className="bg-white rounded-lg w-full max-w-4xl min-h-[80vh] mt-10 overflow-y-auto p-3 md:p-6 relative" onClick={(e) => e.stopPropagation()}>
         <button
           className="absolute top-4 right-4 text-xl text-gray-600 hover:text-black"
-        // onClick={() => setShowModal(false)}
+            onClick={() => dispatch(setShowModal(false))}
         >
           <FaTimes />
         </button>
@@ -32,9 +36,11 @@ const ProductDetails = () => {
         <div className=" pt-7 w-full flex flex-col md:flex-row gap-6">
           <div className="flex flex-row md:flex-col order-2 md:order-1 ">
             <div className="flex w-full flex-row md:flex-col items-center justify-center gap-2 overflow-x-auto md:overflow-x-visible py-2 md:pb-0">
-              {product.images.map((img, index) => (
+              {product.images?.map((img, index) => (
                 <img
                   key={index}
+                  // width={380}
+                  // height={320}
                   src={img}
                   alt="thumb"
                   onClick={() => setSelectedImage(img)}
@@ -136,14 +142,13 @@ const ProductDetails = () => {
             <div className="mt-6">
               <h4 className="font-semibold mb-2">Product Details:</h4>
               <p className="text-sm text-gray-600 whitespace-pre-line">
-                {product.description}
+                  {product.description?.split(" ").slice(0, 10).join(" ") + '...'}
               </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-export default ProductDetails;
+    </div> : null
+  }
+  </>  
+}
