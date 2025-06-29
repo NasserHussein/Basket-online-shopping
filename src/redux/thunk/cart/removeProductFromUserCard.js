@@ -1,12 +1,31 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const removeProductFromUserCard = createAsyncThunk("cart/removeProductFromUserCard", async ({ productId }) => {
-	const { data } = await axios.delete("https://ecommerce.routemisr.com/api/v1/cart/" + productId, {
-		headers: {
-			Authorization:
-				"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjhhYTQ1NDIxZGM1NTM5ZTk4NzNjYSIsIm5hbWUiOiJBaG1lZCBBYmQgQWwtTXV0aSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjgwMzg2NjQ5LCJleHAiOjE2ODgxNjI2NDl9.Lf8hwcr1cd-EDZKRhitaV_6z15xT_8ImEH-phhXKt4I",
-		},
-	});
-	return data;
+export const removeProductFromUserCard = createAsyncThunk("cart/removeProductFromUserCard", async ({ productId }, { rejectWithValue }) => {
+	try {
+		const {
+			data: { data },
+		} = await axios.delete("https://ecommerce.routemisr.com/api/v1/cart/" + productId, {
+			headers: {
+				Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWNkM2YxMGNiNjNkYjM5YTBiMzI1ZCIsImlhdCI6MTc1MDQ3MDk2MCwiZXhwIjoxNzU4MjQ2OTYwfQ.6NC_liGLA7SUqWMrOJOAUFFSugBKtg5oGL5NwoW2ZzM",
+			},
+		});
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			let errorMessage;
+
+			if (error.response) {
+				errorMessage = "We are very sorry that the site is not running due to maintenance and product development reasons.";
+			} else if (error.request) {
+				errorMessage = "Warning: There is a problem with your internet connection. Please check and try again.";
+			} else {
+				errorMessage = "There is a problem preventing you from removing this product. Maybe you are not logged in yet?";
+			}
+
+			return rejectWithValue(errorMessage);
+		}
+		return rejectWithValue("An unknown error occurred.");
+	}
+
 });

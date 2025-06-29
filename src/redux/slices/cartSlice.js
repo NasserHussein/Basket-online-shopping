@@ -4,13 +4,14 @@ import { removeProductFromUserCard } from "../thunk/cart/removeProductFromUserCa
 import { UpdateQuantityProductFromUserCart } from "../thunk/cart/UpdateQuantityProductFromUserCart";
 import { clearUserCart } from "../thunk/cart/clearUserCart";
 import { getLoggedUserCart } from "../thunk/cart/getLoggedUserCart";
+import { updateLocalStorage } from "../../utils/updateLocalStorage";
+import { errorAsyncHandling } from "../../utils/errorAsyncHandling";
 
 const initialCartState = {
 	addedProducts: JSON.parse(localStorage.getItem("addedProducts")) || [],
 	addedUserProducts: null,
-	isLoading: false,
-	isError: false,
-	isSuccess: false,
+	loading: "idle", // 'idle' | 'pending' | 'succeeded' | 'failed'
+	error: null,
 };
 
 const cartSlice = createSlice({
@@ -19,19 +20,15 @@ const cartSlice = createSlice({
 	reducers: {
 		addItemToCart(state, action) {
 			const selectedProduct = action.payload;
-			state.productId = selectedProduct.id;
+
 			if (state.addedProducts.some((item) => item.id === selectedProduct.id)) {
 				let targetedProduct = state.addedProducts.find((item) => item.id === selectedProduct.id);
 				targetedProduct.quantity += 1;
 
-				localStorage.setItem("addedProducts", JSON.stringify(state.addedProducts));
-
-				state.addedProducts = JSON.parse(localStorage.getItem("addedProducts"));
+				updateLocalStorage(state.addedProducts, "addedProducts", state.addedProducts);
 			} else {
 				state.addedProducts.push(selectedProduct);
-				localStorage.setItem("addedProducts", JSON.stringify(state.addedProducts));
-
-				state.addedProducts = JSON.parse(localStorage.getItem("addedProducts"));
+				updateLocalStorage(state.addedProducts, "addedProducts", state.addedProducts);
 			}
 		},
 		removeItemFromCart(state, action) {
@@ -41,102 +38,67 @@ const cartSlice = createSlice({
 				let targetedProduct = state.addedProducts.find((item) => item.id === selectedProduct.id);
 				if (targetedProduct.quantity < 1) {
 					const updatedProducts = state.addedProducts.filter((product) => product.id !== selectedProduct.id);
-					localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
-					state.addedProducts = JSON.parse(localStorage.getItem("addedProducts"));
+					updateLocalStorage(state.addedProducts, "addedProducts", updatedProducts);
 					return;
 				}
 
 				targetedProduct.quantity -= 1;
 
-				localStorage.setItem("addedProducts", JSON.stringify(state.addedProducts));
-
-				state.addedProducts = JSON.parse(localStorage.getItem("addedProducts"));
+				updateLocalStorage(state.addedProducts, "addedProducts", state.addedProducts);
 			} else {
 				const updatedProducts = state.addedProducts.filter((product) => product.id !== selectedProduct.id);
-				localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
-
-				state.addedProducts = JSON.parse(localStorage.getItem("addedProducts"));
+				updateLocalStorage(state.addedProducts, "addedProducts", updatedProducts);
 			}
 		},
 	},
 	extraReducers(builder) {
 		builder.addCase(addProductToUserCart.pending, (state) => {
-			state.isLoading = true;
-			state.isError = false;
-			state.isSuccess = false;
+			state.loading = "loading";
 		});
-		builder.addCase(addProductToUserCart.rejected, (state) => {
-			state.isError = true;
-			state.isLoading = false;
-			state.isSuccess = false;
+		builder.addCase(addProductToUserCart.rejected, (state, { payload }) => {
+			errorAsyncHandling(state, payload);
 		});
 		builder.addCase(addProductToUserCart.fulfilled, (state) => {
-			state.isError = false;
-			state.isSuccess = true;
-			state.isLoading = false;
-    });
-    builder.addCase(removeProductFromUserCard.pending, (state) => { 
-      state.isLoading = true;
-			state.isError = false;
-			state.isSuccess = false;
-    })
-    builder.addCase(removeProductFromUserCard.rejected, (state) => {
-      state.isError = true;
-			state.isLoading = false;
-			state.isSuccess = false;
-     })
-    builder.addCase(removeProductFromUserCard.fulfilled, (state) => { 
-      state.isError = false;
-			state.isSuccess = true;
-			state.isLoading = false;
-    })
-    builder.addCase(UpdateQuantityProductFromUserCart.pending, (state) => {
-			state.isLoading = true;
-			state.isError = false;
-			state.isSuccess = false;
+			state.loading = "fulfilled";
 		});
-		builder.addCase(UpdateQuantityProductFromUserCart.rejected, (state) => {
-			state.isError = true;
-			state.isLoading = false;
-			state.isSuccess = false;
+		builder.addCase(removeProductFromUserCard.pending, (state) => {
+			state.loading = "loading";
+		});
+		builder.addCase(removeProductFromUserCard.rejected, (state, { payload }) => {
+			errorAsyncHandling(state, payload);
+		});
+		builder.addCase(removeProductFromUserCard.fulfilled, (state) => {
+			state.loading = "fulfilled";
+		});
+		builder.addCase(UpdateQuantityProductFromUserCart.pending, (state) => {
+			state.loading = "loading";
+		});
+		builder.addCase(UpdateQuantityProductFromUserCart.rejected, (state, { payload }) => {
+			errorAsyncHandling(state, payload);
 		});
 		builder.addCase(UpdateQuantityProductFromUserCart.fulfilled, (state) => {
-			state.isError = false;
-			state.isSuccess = true;
-			state.isLoading = false;
-    });
-    
-    builder.addCase(clearUserCart.pending, (state) => {
-			state.isLoading = true;
-			state.isError = false;
-			state.isSuccess = false;
+			state.loading = "fulfilled";
 		});
-		builder.addCase(clearUserCart.rejected, (state) => {
-			state.isError = true;
-			state.isLoading = false;
-			state.isSuccess = false;
+
+		builder.addCase(clearUserCart.pending, (state) => {
+			state.loading = "pending";
+		});
+		builder.addCase(clearUserCart.rejected, (state, { payload }) => {
+			errorAsyncHandling(state, payload);
 		});
 		builder.addCase(clearUserCart.fulfilled, (state) => {
-			state.isError = false;
-			state.isSuccess = true;
-			state.isLoading = false;
-    });
-    
-    builder.addCase(getLoggedUserCart.pending, (state) => {
-			state.isLoading = true;
-			state.isError = false;
-			state.isSuccess = false;
+			state.loading = "fulfilled";
 		});
-		builder.addCase(getLoggedUserCart.rejected, (state) => {
-			state.isError = true;
-			state.isLoading = false;
-			state.isSuccess = false;
+
+		builder.addCase(getLoggedUserCart.pending, (state) => {
+			state.loading = "pending";
 		});
-		builder.addCase(getLoggedUserCart.fulfilled, (state, {payload}) => {
-			state.isError = false;
-			state.isSuccess = true;
-      state.isLoading = false;
-      state.addedUserProducts = [...payload.products];
+		builder.addCase(getLoggedUserCart.rejected, (state, { payload }) => {
+			errorAsyncHandling(state, payload);
+		});
+		builder.addCase(getLoggedUserCart.fulfilled, (state, { payload }) => {
+			state.loading = "fulfilled";
+			state.addedUserProducts = payload.data.data;
 		});
 	},
 });
