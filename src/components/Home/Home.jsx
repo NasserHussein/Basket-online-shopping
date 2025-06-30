@@ -17,7 +17,7 @@ export default function Home() {
 		if (limitedProducts) {
 			const updatedProducts = limitedProducts.map((product) => allProducts.filter((item) => item.title !== product.title))[0];
 
-			updatedProducts ? setMixedProducts(updatedProducts.slice(0, 4)) : setMixedProducts([]);
+			updatedProducts ? setMixedProducts(updatedProducts.slice(0, 5)) : setMixedProducts([]);
 		}
 	}, [limitedProducts, allProducts]);
 
