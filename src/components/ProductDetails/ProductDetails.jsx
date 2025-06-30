@@ -9,7 +9,7 @@ export default function ProductDetails() {
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(1);
 	const [size, setSize] = useState("small");
-	const { isLoadin, product, showModal } = useSelector((Store) => Store.specificProductReducer);
+	const { isLoading, product, showModal } = useSelector((Store) => Store.specificProducts);
 	const handleWishlist = () => {
 		dispatch(addToWishlist(product._id));
 	};
@@ -22,7 +22,7 @@ export default function ProductDetails() {
 	}, [product?.imageCover]);
 	return (
 		<>
-			{isLoadin ? (
+			{isLoading ? (
 				<Loading />
 			) : showModal ? (
 				<div
