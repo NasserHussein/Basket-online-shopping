@@ -15,6 +15,9 @@ let specificProductSlice = createSlice({
     reducers: {
         setShowModal: (state, action) =>{
             state.showModal = action.payload;
+        },
+        clearProduct: (state)=>{
+            state.product = {};
         }
     },
     extraReducers: (builder)=>{
@@ -23,7 +26,6 @@ let specificProductSlice = createSlice({
         });
         builder.addCase(getSpecificProduct.fulfilled, (state, action)=>{
             state.isLoading =false;
-            state.showModal = true;
             state.product = action.payload;
         });
         builder.addCase(getSpecificProduct.rejected, (state, action)=>{
@@ -34,4 +36,4 @@ let specificProductSlice = createSlice({
 })
 
 export let specificProductReducer = specificProductSlice.reducer;
-export let {setShowModal} = specificProductSlice.actions
+export let {setShowModal, clearProduct} = specificProductSlice.actions
