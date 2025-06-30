@@ -4,9 +4,8 @@ import axios from "axios";
 
 let initialState = { isLoading: false, products: [], error: null };
 
-export let getProduct = createAsyncThunk("products/getProduct", async (productLimit) => {
-	let { data } = await axios.get(`https://ecommerce.routemisr.com/api/v1/products?limit=${productLimit}`);
-
+export let getProducts = createAsyncThunk("products/getProduct", async () => {
+	let { data } = await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
 	return data.data;
 });
 
@@ -15,14 +14,14 @@ let productsSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
-		builder.addCase(getProduct.pending, (state) => {
+		builder.addCase(getProducts.pending, (state) => {
 			state.isLoading = true;
 		});
-		builder.addCase(getProduct.fulfilled, (state, action) => {
+		builder.addCase(getProducts.fulfilled, (state, action) => {
 			state.isLoading = false;
 			state.products = action.payload;
 		});
-		builder.addCase(getProduct.rejected, (state, action) => {
+		builder.addCase(getProducts.rejected, (state, action) => {
 			state.isLoading = false;
 			state.error = action.payload;
 		});

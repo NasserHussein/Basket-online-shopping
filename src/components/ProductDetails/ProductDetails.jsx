@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpecificProduct, setShowModal } from '../../redux/slices/specificProductSlice';
 import Loading from '../Loading/Loading';
 
-export default function ProductDetails({productID}) {
+export default function ProductDetails() {
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
     const [size, setSize] = useState("small");
@@ -12,23 +12,20 @@ export default function ProductDetails({productID}) {
     const handleWishlist = () => {
       dispatch(addToWishlist(product._id));
     };
-    useEffect(()=>{
-      dispatch(getSpecificProduct(productID));
-    }, []);
     
     const [selectedImage, setSelectedImage] = useState(product.imageCover);
     useEffect(() => {
-      if (product.imageCover) {
-        setSelectedImage(product.imageCover);
+      if (product?.imageCover) {
+        setSelectedImage(product?.imageCover);
       }
-    }, [product.imageCover]);
+    }, [product?.imageCover]);
   return <>
   {isLoadin? <Loading/> : showModal ? 
-      <div className=" fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center overflow-auto p-4" onClick={() => dispatch(setShowModal(false))}>
+      <div className=" fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center overflow-auto p-4" onClick={() => { dispatch(setShowModal(false));setSelectedImage(null);}}>
         <div className="bg-white rounded-lg w-full max-w-4xl min-h-[80vh] mt-10 overflow-y-auto p-3 md:p-6 relative" onClick={(e) => e.stopPropagation()}>
         <button
           className="absolute top-4 right-4 text-xl text-gray-600 hover:text-black"
-            onClick={() => dispatch(setShowModal(false))}
+          onClick={() => { dispatch(setShowModal(false));setSelectedImage(null);}}
         >
           <FaTimes />
         </button>
@@ -39,8 +36,6 @@ export default function ProductDetails({productID}) {
               {product.images?.map((img, index) => (
                 <img
                   key={index}
-                  // width={380}
-                  // height={320}
                   src={img}
                   alt="thumb"
                   onClick={() => setSelectedImage(img)}
