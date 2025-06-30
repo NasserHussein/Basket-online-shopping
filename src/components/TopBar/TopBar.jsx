@@ -10,7 +10,7 @@ export default function TopBar() {
       </div>
       <div className='container text-xs py-[13.5px] flex justify-between'>
         <ul className='capitalize flex gap-x-2 sm:gap-x-[15px]'>
-            <Link href=""><li>about us</li></Link>
+            <Link to="/AboutUs"><li>about us</li></Link>
             <li className='cursor-pointer'>wishlist</li>
         </ul>
           <div className='flex  gap-x-[18px] items-center'>

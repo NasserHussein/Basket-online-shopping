@@ -5,21 +5,26 @@ import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import AboutUs from './components/About Us/AboutUs'
+import Blog from './components/Blog/Blog'
 
 if (!localStorage.getItem("addedProducts")) {
-	localStorage.setItem("addedProducts", JSON.stringify([]));
+  localStorage.setItem("addedProducts", JSON.stringify([]));
 }
 
-const routers =createBrowserRouter([{
-  path: '',element:<Layout/>, children:[
-    {index: true, element:<Home/>},
+const routers = createBrowserRouter([{
+  path: '', element: <Layout />, children: [
+    { index: true, element: <Home /> },
+    { path: "AboutUs", element: <AboutUs /> },
+    { path: "blog", element: <Blog /> },
   ]
 }]);
+
 function App() {
   return <>
-  <Provider store={store}>
-    <RouterProvider router={routers}></RouterProvider>
-  </Provider>
+    <Provider store={store}>
+      <RouterProvider router={routers}></RouterProvider>
+    </Provider>
   </>
 }
 
