@@ -1,45 +1,36 @@
 import { useEffect, useState } from "react";
 import Products from "../Products/Products";
+import Loading from "../Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct } from "../../redux/slices/productsSlice";
-import axios from "axios";
+import { getProducts } from "../../redux/slices/productsSlice";
+import Pagination from "../Pagination/Pagination";
 
 export default function Home() {
-	const [allProducts, setAllProducts] = useState([]);
-	const [mixedProducts, setMixedProducts] = useState([]);
-
 	const dispatch = useDispatch();
-	const limitedProducts = useSelector((state) => state.products.products);
-
-	// trying implement mixed fetch data from api ...
-
-	useEffect(() => {
-		if (limitedProducts) {
-			const updatedProducts = limitedProducts.map((product) => allProducts.filter((item) => item.title !== product.title))[0];
-
-			updatedProducts ? setMixedProducts(updatedProducts.slice(0, 5)) : setMixedProducts([]);
-		}
-	}, [limitedProducts, allProducts]);
+	const { products, isLoading } = useSelector((state) => state.productsReducer);
+	const [currentPage, setCurrentPage] = useState(1);
+	const itemsPerPage = 6;
 
 	useEffect(() => {
-		dispatch(getProduct(5));
+		dispatch(getProducts());
+	}, []);
 
-		const allProductsData = async () => {
-			try {
-				const { data } = await axios.get("https://ecommerce.routemisr.com/api/v1/products");
-				setAllProducts(data.data);
-			} catch (error) {
-				console.error("Error fetching all products:", error);
-			}
-		};
-		allProductsData();
-	}, [dispatch]);
-
+	const totalPages = Math.ceil(products.length / itemsPerPage);
+	const startIndex = (currentPage - 1) * itemsPerPage;
+	const endIndex = startIndex + itemsPerPage;
+	const currentproducts = products.slice(startIndex, endIndex);
 	return (
 		<>
+		{isLoading ? <Loading/> :
 			<div className="container">
-				<Products data={mixedProducts} />
+				<Products data={currentproducts} />
+				<Pagination
+					currentPage={currentPage}
+					totalPages={totalPages}
+					onPageChange={(page) => setCurrentPage(page)}
+				/>
 			</div>
+		}
 		</>
 	);
 }
