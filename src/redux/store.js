@@ -5,8 +5,8 @@ import { cartReducer } from "./slices/cartSlice";
 
 export let store = configureStore({
     reducer:{
-        productsReducer,
-        specificProductReducer,
+        products: productsReducer,
+        specificProducts: specificProductReducer,
         cart:cartReducer,
     }
 });
