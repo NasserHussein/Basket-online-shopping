@@ -6,6 +6,7 @@ import Loading from "../Loading/Loading";
 import { addToWishlist } from "../../redux/slices/wishlistSlice";
 
 export default function ProductDetails() {
+  
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(1);
 	const [size, setSize] = useState("small");
