@@ -8,6 +8,7 @@ import { store } from './redux/store';
 import Checkout from './pages/Checkout';
 import AboutUs from './components/About Us/AboutUs'
 import Blog from './components/Blog/Blog'
+import Contact from './pages/Contact'
 import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
 import ForgetPassword from './components/Auth/ForgetPassword/ForgetPassword';
@@ -30,8 +31,9 @@ const routers = createBrowserRouter([{
     { path: "/verify-code", element: <RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode /></ProudectVerifyCodeRoute></RestrictedRoute> },
     { path: "/reset-password", element: <RestrictedRoute><ProdectedResetPassword><ResetPassword /></ProdectedResetPassword></RestrictedRoute> },
     { path: "/checkout", element: <Checkout /> },
-    { path: "AboutUs", element: <AboutUs /> },
-    { path: "blog", element: <Blog /> },
+    { path: "/AboutUs", element: <AboutUs /> },
+    { path: "/blog", element: <Blog /> },
+    { path: "/contact", element: <Contact /> },
   ]
 }]);
 
