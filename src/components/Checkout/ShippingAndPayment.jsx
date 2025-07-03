@@ -21,11 +21,11 @@ const ShippingAndPayment = () => {
 				<p className="text-sm text-gray-500">All transactions are secure and encrypted.</p>
 
 				<div className="w-full h-32 border border-gray-200 rounded bg-gray-50 flex flex-col items-center justify-center text-center px-4">
-					<img
+					{/* <img
 						src={""}
 						alt="Payment not available"
 						className="h-8 object-contain mb-2"
-					/>
+					/> */}
 					<p className="text-sm text-gray-500">This store can’t accept payments right now.</p>
 				</div>
 

@@ -8,7 +8,8 @@ export let store = configureStore({
     reducer:{
         products: productsReducer,
         specificProducts: specificProductReducer,
-        cart:cartReducer,
+        // cart:cartReducer,
+        cartReducer,
         authReducer
     }
 });
