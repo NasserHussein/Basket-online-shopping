@@ -9,7 +9,7 @@ export function formatText(type = "", text) {
     
     const wordsArray = cleanedDescription.split(/\s+/).filter((word) => word.length > 0); // Filter out any empty strings from split
     
-    const maxWords = 5;
+    const maxWords = 2;
     let resultString = "";
     
     if (wordsArray.length > maxWords) {
@@ -22,7 +22,7 @@ export function formatText(type = "", text) {
     return resultString;
   } else {
     const titleSplitted = text.split(" ");
-		titleSplitted.splice(4, titleSplitted.length);
+		titleSplitted.splice(2, titleSplitted.length);
 		const titleFormatted = titleSplitted.join(" ");
 		return titleFormatted;
 }
