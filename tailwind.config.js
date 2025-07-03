@@ -24,7 +24,16 @@ export default {
     extend: {
       colors: {
         'main': '#35AFA0',
-      }
+      },
+      animation: {
+        'scroll-x': 'scrollX 15s linear infinite',
+      },
+      keyframes: {
+        scrollX: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
     },
   },
   plugins: [],

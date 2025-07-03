@@ -19,6 +19,7 @@ import ProudectVerifyCodeRoute from './components/ProtectedRoute/ProudectVerifyC
 import ProdectedResetPassword from './components/ProtectedRoute/ProdectedResetPassword';
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import Wishlist from './components/Wishlist/Wishlist';
 
 if (!localStorage.getItem("addedProducts")) {
   localStorage.setItem("addedProducts", JSON.stringify([]));
@@ -33,7 +34,8 @@ const routers = createBrowserRouter([{
     { path: "/verify-code", element: <RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode /></ProudectVerifyCodeRoute></RestrictedRoute> },
     { path: "/reset-password", element: <RestrictedRoute><ProdectedResetPassword><ResetPassword /></ProdectedResetPassword></RestrictedRoute> },
     { path: "/checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
-    { path: "/AboutUs", element: <AboutUs /> },
+    { path: "/wishlist", element: <ProtectedRoute><Wishlist /></ProtectedRoute> },
+    { path: "/aboutUs", element: <AboutUs /> },
     { path: "/blog", element: <Blog /> },
     { path: "/contact", element: <Contact /> },
   ]

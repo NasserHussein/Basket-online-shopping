@@ -10,8 +10,8 @@ export default function TopBar() {
       </div>
       <div className='container text-xs py-[13.5px] flex justify-between'>
         <ul className='capitalize flex gap-x-2 sm:gap-x-[15px]'>
-            <Link to="/AboutUs"><li>about us</li></Link>
-            <li className='cursor-pointer'>wishlist</li>
+          <Link to="/aboutUs" className='hover:text-main'><li>about us</li></Link>
+          <Link to="/wishlist" className='hover:text-main'><li>wishlist</li></Link>
         </ul>
           <div className='flex  gap-x-[18px] items-center'>
               <p className='[@media(min-width:671px)]:[display:flex] hidden justify-center items-center'>
