@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
-import Button from "../Button/Button";
 import Stars from "../StarSvg/Stars";
 import { formatDateTime } from "../../utils/formatDate";
 import { formatText } from "../../utils/formatText";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearProduct, getSpecificProduct, setShowModal } from "../../redux/slices/specificProductSlice";
-
+import { addToCart } from "../../redux/slices/cartSlice";
+import toast from "react-hot-toast";
 
 export default function Card({ id, ratingsQuantity, price, img, title, description, createdAt, quantity, ratingsAverage }) {
 	const [heartClasses, setHeartClasses] = useState("text-rose-300");
 	const [isFavourite, setIsFavourite] = useState(false);
 	const dispatch = useDispatch();
+	const { token } = useSelector((store) => store.authReducer);
 	const formattedDescription = formatText("description", description);
 	const formattedDate = formatDateTime(createdAt, { locale: "US-EG", dateStyle: "full", timeStyle: "short" });
 	const formattedTitle = formatText("title", title);
@@ -20,6 +21,14 @@ export default function Card({ id, ratingsQuantity, price, img, title, descripti
 		dispatch(setShowModal(true));
 		dispatch(clearProduct());
 	  };
+	  function handelAddToCart(e, id){
+		  e.stopPropagation();
+		  if(token){
+			  dispatch(addToCart(id));
+		  }else{
+			  toast.error('You must log in.');  
+		  }
+	  }
 	return (
 		<>
 			<div className="border-r  border-b relative p-5 cursor-pointer" onClick={() => { handleProductClick(id) }}>
@@ -55,7 +64,12 @@ export default function Card({ id, ratingsQuantity, price, img, title, descripti
 					/>
 				</div>
 				<p className="text-gray-400 text-sm mt-5"> Published on {formattedDate}</p>
-				<Button />
+				<button
+					onClick={(e) => { handelAddToCart(e, id) }}
+					type="button"
+					className="text-black mt-4 w-full bg-[#FFCD00] hover:bg-yellow-500 focus:outline-none  font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 ">
+					add to cart
+				</button>
 			</div>
 		</>
 	);

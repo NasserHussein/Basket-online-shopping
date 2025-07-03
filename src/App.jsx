@@ -17,6 +17,8 @@ import ResetPassword from './components/Auth/ResetPassword/ResetPassword';
 import RestrictedRoute from './components/ProtectedRoute/RestrictedRoute';
 import ProudectVerifyCodeRoute from './components/ProtectedRoute/ProudectVerifyCodeRoute';
 import ProdectedResetPassword from './components/ProtectedRoute/ProdectedResetPassword';
+import { Toaster } from 'react-hot-toast';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 if (!localStorage.getItem("addedProducts")) {
   localStorage.setItem("addedProducts", JSON.stringify([]));
@@ -30,7 +32,7 @@ const routers = createBrowserRouter([{
     { path: "/forgot-password", element: <RestrictedRoute><ForgetPassword /></RestrictedRoute> },
     { path: "/verify-code", element: <RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode /></ProudectVerifyCodeRoute></RestrictedRoute> },
     { path: "/reset-password", element: <RestrictedRoute><ProdectedResetPassword><ResetPassword /></ProdectedResetPassword></RestrictedRoute> },
-    { path: "/checkout", element: <Checkout /> },
+    { path: "/checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
     { path: "/AboutUs", element: <AboutUs /> },
     { path: "/blog", element: <Blog /> },
     { path: "/contact", element: <Contact /> },
@@ -41,6 +43,7 @@ function App() {
   return <>
     <Provider store={store}>
       <RouterProvider router={routers}></RouterProvider>
+      <Toaster/>
     </Provider>
   </>
 }
