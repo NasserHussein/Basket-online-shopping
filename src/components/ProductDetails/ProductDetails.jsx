@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { FaRegHeart, FaShareAlt, FaStar, FaTimes } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaShareAlt, FaStar, FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowModal } from "../../redux/slices/specificProductSlice";
 import Loading from "../Loading/Loading";
-import { addToWishlist } from "../../redux/slices/wishlistSlice";
+import { addToWishlist, getWishlist, removeItemFromWishlist } from "../../redux/slices/wishlistSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 export default function ProductDetails() {
 
@@ -11,10 +12,31 @@ export default function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("small");
   const { isLoading, product, showModal } = useSelector((Store) => Store.specificProducts);
-  const handleWishlist = () => {
-    dispatch(addToWishlist(product._id));
+  const { WishListArrID, loading } = useSelector((Store) => Store.wishlistReducer);
+  const { token } = useSelector((Store) => Store.authReducer);
+  function handelAddToCart() {
+    if (token) {
+      dispatch(addToCart(product._id));
+    } else {
+      toast.error('You must log in.');
+    }
   };
-
+  async function handleWishlist(){
+    if(token){
+     await dispatch(addToWishlist(product._id));
+     dispatch(getWishlist());    
+    }else{
+      toast.error('You must log in.');
+    }
+  };
+  async function handelRemoveItemFromWishlist() {
+    if (token) {
+      await dispatch(removeItemFromWishlist(product._id));
+      dispatch(getWishlist());
+    } else {
+      toast.error('You must log in.');
+    }
+  };
   const [selectedImage, setSelectedImage] = useState(product.imageCover);
   useEffect(() => {
     if (product?.imageCover) {
@@ -125,17 +147,22 @@ export default function ProductDetails() {
                       +
                     </button>
                   </div>
-                  <button className=" flex-1 px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+                  <button 
+                      onClick={() => { handelAddToCart() }}
+                  className=" flex-1 px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
                     Add to Cart
                   </button>
                 </div>
 
                 <div className="flex w-full gap-4 flex-wrap">
                   <button
-                    onClick={handleWishlist}
+                      onClick={WishListArrID.includes(product?._id)? handelRemoveItemFromWishlist:handleWishlist}
+                      disabled={loading}
                     className=" flex-1 flex items-center justify-center gap-3 px-4 py-2 border rounded hover:bg-gray-100 transition"
                   >
-                    <FaRegHeart className="text-red-500" /> Wishlist
+                      {WishListArrID.includes(product?._id) ? <FaHeart className="text-red-500" /> : <FaRegHeart className="text-red-500" />}
+                       
+                       Wishlist
                   </button>
                   <button className=" flex-1 flex items-center justify-center gap-3 px-4 py-2 border rounded hover:bg-gray-100 transition">
                     <FaShareAlt /> Share

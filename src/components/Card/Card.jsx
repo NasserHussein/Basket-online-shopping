@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearProduct, getSpecificProduct, setShowModal } from "../../redux/slices/specificProductSlice";
 import { addToCart } from "../../redux/slices/cartSlice";
 import toast from "react-hot-toast";
+import { addToWishlist, removeItemFromWishlist } from "../../redux/slices/wishlistSlice";
 
 export default function Card({ id, ratingsQuantity, price, img, title, description, createdAt, quantity, ratingsAverage }) {
-	const [heartClasses, setHeartClasses] = useState("text-rose-300");
-	const [isFavourite, setIsFavourite] = useState(false);
+	// const [heartClasses, setHeartClasses] = useState("text-rose-300");
+	// const [isFavourite, setIsFavourite] = useState(false);
 	const dispatch = useDispatch();
 	const { token } = useSelector((store) => store.authReducer);
+	const { loading, WishListArrID } = useSelector((store) => store.wishlistReducer);
 	const formattedDescription = formatText("description", description);
 	const formattedDate = formatDateTime(createdAt, { locale: "US-EG", dateStyle: "full", timeStyle: "short" });
 	const formattedTitle = formatText("title", title);
@@ -20,15 +22,29 @@ export default function Card({ id, ratingsQuantity, price, img, title, descripti
 		dispatch(getSpecificProduct(id));
 		dispatch(setShowModal(true));
 		dispatch(clearProduct());
-	  };
-	  function handelAddToCart(e, id){
-		  e.stopPropagation();
-		  if(token){
-			  dispatch(addToCart(id));
-		  }else{
-			  toast.error('You must log in.');  
-		  }
-	  }
+	};
+	function handelAddToCart(e, id) {
+		e.stopPropagation();
+		if (token) {
+			dispatch(addToCart(id));
+		} else {
+			toast.error('You must log in.');
+		}
+	};
+	function handelAddToWishlist(id) {
+		if (token) {
+			dispatch(addToWishlist(id));
+		} else {
+			toast.error('You must log in.');
+		}
+	};
+	function handelRemoveItemFromWishlist(id) {
+		if (token) {
+			dispatch(removeItemFromWishlist(id));
+		} else {
+			toast.error('You must log in.');
+		}
+	};
 	return (
 		<>
 			<div className="border-r  border-b relative p-5 cursor-pointer" onClick={() => { handleProductClick(id) }}>
@@ -53,14 +69,22 @@ export default function Card({ id, ratingsQuantity, price, img, title, descripti
 						<Stars averageRating={ratingsAverage} />
 					</div>
 					<FaHeart
-						onMouseDown={() => {
-							setIsFavourite((prevFavourite) => (!prevFavourite ? true : false));
-							setHeartClasses(`hover:scale-75 ${!isFavourite ? "text-rose-500" : "text-rose-300"}`);
-						}}
-						onMouseUp={() => setHeartClasses(`hover:scale-125 ${isFavourite ? "text-rose-500" : "text-rose-300"}`)}
-						onMouseLeave={() => setHeartClasses(`hover:scale-100 ${isFavourite ? "text-rose-500" : "text-rose-300"}`)}
-						onMouseEnter={() => setHeartClasses(`hover:scale-125 ${isFavourite ? "text-rose-500" : "text-rose-300"}`)}
-						className={`text-2xl transition-all  hover:text-rose-500 ${heartClasses}`}
+						key={WishListArrID.includes(id)}
+						onClick={(e) => { e.stopPropagation();
+							 loading ? 
+							 null : 
+							 WishListArrID.includes(id) ?
+							 handelRemoveItemFromWishlist(id) :
+							 handelAddToWishlist(id)
+							 }}
+						// onMouseDown={() => {
+						// 	 setIsFavourite((prevFavourite) => (!prevFavourite ? true : false));
+						// 	setHeartClasses(`hover:scale-75 ${!isFavourite ? "text-rose-500" : "text-rose-300"}`);
+						// }}
+						// onMouseUp={() => setHeartClasses(`hover:scale-125 ${WishListArrID.includes(id) ? "text-rose-500" : "text-rose-300"}`)}
+						// onMouseLeave={() => setHeartClasses(`hover:scale-100 ${WishListArrID.includes(id) ? "text-rose-500" : "text-rose-300"}`)}
+						// onMouseEnter={() => setHeartClasses(`hover:scale-125 ${WishListArrID.includes(id) ? "text-rose-500" : "text-rose-300"}`)}
+						className={`text-2xl ${loading && 'cursor-default'} transition-all hover:scale-125 hover:text-rose-500 ${WishListArrID.includes(id) ? 'text-rose-500' : 'text-rose-300'}`}
 					/>
 				</div>
 				<p className="text-gray-400 text-sm mt-5"> Published on {formattedDate}</p>
