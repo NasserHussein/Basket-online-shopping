@@ -15,7 +15,6 @@ export default {
         xl: '8rem',
       },
       screens: {
-        // xs: "300px",
         sm: "740px",
         md: "968px",
         lg: "1124px",
