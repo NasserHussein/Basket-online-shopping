@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
-import Button from "../Button/Button";
 import Stars from "../StarSvg/Stars";
 import { formatDateTime } from "../../utils/formatDate";
 import { formatText } from "../../utils/formatText";
@@ -26,6 +25,7 @@ export default function Card({
 	const [heartClasses, setHeartClasses] = useState("text-rose-300");
 	const [isFavourite, setIsFavourite] = useState(false);
 	const dispatch = useDispatch();
+	const { token } = useSelector((store) => store.authReducer);
 	const formattedDescription = formatText("description", description);
 	const formattedDate = formatDateTime(createdAt, {
 		locale: "US-EG",
@@ -37,8 +37,15 @@ export default function Card({
 		dispatch(getSpecificProduct(id));
 		dispatch(setShowModal(true));
 		dispatch(clearProduct());
-	};
-
+	  };
+	  function handelAddToCart(e, id){
+		  e.stopPropagation();
+		  if(token){
+			  dispatch(addToCart(id));
+		  }else{
+			  toast.error('You must log in.');  
+		  }
+	  }
 	return (
 		<>
 			<div className="border-r space-y-2 border-b relative p-5">

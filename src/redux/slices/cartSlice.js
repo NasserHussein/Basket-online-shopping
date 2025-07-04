@@ -1,107 +1,114 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { addProductToUserCart } from "../thunk/cart/addProductToUserCard";
-import { removeProductFromUserCard } from "../thunk/cart/removeProductFromUserCard";
-import { UpdateQuantityProductFromUserCart } from "../thunk/cart/UpdateQuantityProductFromUserCart";
-import { clearUserCart } from "../thunk/cart/clearUserCart";
-import { getLoggedUserCart } from "../thunk/cart/getLoggedUserCart";
-import { updateLocalStorage } from "../../utils/updateLocalStorage";
-import { errorAsyncHandling } from "../../utils/errorAsyncHandling";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const initialCartState = {
-	addedProducts: JSON.parse(localStorage.getItem("addedProducts")) || [],
-	addedUserProducts: null,
-	loading: "idle", // 'idle' | 'pending' | 'succeeded' | 'failed'
-	error: null,
-};
+const initialState = {isLoadingAddToCart: false,isLoadingGetCart: false, isLoadingUpdateCart: false, isLoadingDeleteCart: false, cart:[], isError:null, numOfCartItems: 0, totalCartPrice: 0};
 
-const cartSlice = createSlice({
-	name: "cart",
-	initialState: initialCartState,
-	reducers: {
-		addItemToCart(state, action) {
-			const selectedProduct = action.payload;
+export let getCart = createAsyncThunk('cart/getCart',async () =>{
+    let {data} = await axios.get('https://ecommerce.routemisr.com/api/v1/cart',{
+        headers:{
+            token: `${localStorage.getItem("userToken")}`
+        }
+    });
+    return data;
+});
+export let addToCart = createAsyncThunk('cart/addToCart',async (productId) =>{
+    let {data} = await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`,{productId},{
+        headers:{
+            token: `${localStorage.getItem("userToken")}`
+        }
+    });
+    return data;
+});
+export let updateCart = createAsyncThunk('cart/updateCart',async ({count ,productId}) =>{
+    let {data} = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`,{count},{
+        headers:{
+            token: `${localStorage.getItem("userToken")}`
+        }
+    });
+    return data;
+});
+export let removeFromCart = createAsyncThunk('cart/removeFromCart',async (productId) =>{
+    let {data} = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`,{
+        headers:{
+            token: `${localStorage.getItem("userToken")}`
+        }
+    });    
+    return data;
+});
 
-			if (state.addedProducts.some((item) => item.id === selectedProduct.id)) {
-				let targetedProduct = state.addedProducts.find((item) => item.id === selectedProduct.id);
-				targetedProduct.quantity += 1;
-
-				updateLocalStorage(state.addedProducts, "addedProducts", state.addedProducts);
-			} else {
-				state.addedProducts.push(selectedProduct);
-				updateLocalStorage(state.addedProducts, "addedProducts", state.addedProducts);
-			}
-		},
-		removeItemFromCart(state, action) {
-			const selectedProduct = action.payload;
-
-			if (state.addedProducts.some((item) => item.id === selectedProduct.id)) {
-				let targetedProduct = state.addedProducts.find((item) => item.id === selectedProduct.id);
-				if (targetedProduct.quantity < 1) {
-					const updatedProducts = state.addedProducts.filter((product) => product.id !== selectedProduct.id);
-					updateLocalStorage(state.addedProducts, "addedProducts", updatedProducts);
-					return;
-				}
-
-				targetedProduct.quantity -= 1;
-
-				updateLocalStorage(state.addedProducts, "addedProducts", state.addedProducts);
-			} else {
-				const updatedProducts = state.addedProducts.filter((product) => product.id !== selectedProduct.id);
-				updateLocalStorage(state.addedProducts, "addedProducts", updatedProducts);
-			}
-		},
-	},
-	extraReducers(builder) {
-		builder.addCase(addProductToUserCart.pending, (state) => {
-			state.loading = "loading";
-		});
-		builder.addCase(addProductToUserCart.rejected, (state, { payload }) => {
-			errorAsyncHandling(state, payload);
-		});
-		builder.addCase(addProductToUserCart.fulfilled, (state) => {
-			state.loading = "fulfilled";
-		});
-		builder.addCase(removeProductFromUserCard.pending, (state) => {
-			state.loading = "loading";
-		});
-		builder.addCase(removeProductFromUserCard.rejected, (state, { payload }) => {
-			errorAsyncHandling(state, payload);
-		});
-		builder.addCase(removeProductFromUserCard.fulfilled, (state) => {
-			state.loading = "fulfilled";
-		});
-		builder.addCase(UpdateQuantityProductFromUserCart.pending, (state) => {
-			state.loading = "loading";
-		});
-		builder.addCase(UpdateQuantityProductFromUserCart.rejected, (state, { payload }) => {
-			errorAsyncHandling(state, payload);
-		});
-		builder.addCase(UpdateQuantityProductFromUserCart.fulfilled, (state) => {
-			state.loading = "fulfilled";
-		});
-
-		builder.addCase(clearUserCart.pending, (state) => {
-			state.loading = "pending";
-		});
-		builder.addCase(clearUserCart.rejected, (state, { payload }) => {
-			errorAsyncHandling(state, payload);
-		});
-		builder.addCase(clearUserCart.fulfilled, (state) => {
-			state.loading = "fulfilled";
-		});
-
-		builder.addCase(getLoggedUserCart.pending, (state) => {
-			state.loading = "pending";
-		});
-		builder.addCase(getLoggedUserCart.rejected, (state, { payload }) => {
-			errorAsyncHandling(state, payload);
-		});
-		builder.addCase(getLoggedUserCart.fulfilled, (state, { payload }) => {
-			state.loading = "fulfilled";
-			state.addedUserProducts = payload.data.data;
-		});
-	},
+let cartSlice = createSlice({
+    name: 'cart',
+    initialState,
+    reducers: {
+        clearWhenLogot:(state)=>{
+        state.cart = [];
+        state.numOfCartItems = 0;
+        state.totalCartPrice = 0;
+    },
+    },
+    extraReducers: (builder) =>{
+        builder.addCase(addToCart.pending,(state)=>{
+            state.isLoadingAddToCart = true;
+        });
+        builder.addCase(addToCart.fulfilled,(state,action)=>{
+            state.isLoadingAddToCart = false;
+            state.cart = action.payload.data.products;
+            state.numOfCartItems = action.payload.numOfCartItems;
+            state.totalCartPrice = action.payload.data.totalCartPrice;
+            toast.success(action.payload.message);
+        });
+        builder.addCase(addToCart.rejected,(state,action)=>{
+            state.isLoadingAddToCart = false;
+            state.isError = action.payload;
+            toast.error("Something went wrong. Please try again later.");
+        });
+///////////////////////////////getCart//////////////////////////////////////////////
+        builder.addCase(getCart.pending,(state)=>{
+            state.isLoadingGetCart = true;
+        });
+        builder.addCase(getCart.fulfilled,(state,action)=>{
+            state.isLoadingGetCart = false;
+            state.cart = action.payload.data.products;
+            state.numOfCartItems = action.payload.numOfCartItems;
+            state.totalCartPrice = action.payload.data.totalCartPrice;
+        });
+        builder.addCase(getCart.rejected,(state,action)=>{
+            state.isLoadingGetCart = false;
+            state.isError = action.payload;
+        });
+/////////////////////////////////updateCart/////////////////////////////////////////////
+        builder.addCase(updateCart.pending,(state)=>{
+            state.isLoadingUpdateCart = true;
+        });
+        builder.addCase(updateCart.fulfilled,(state,action)=>{
+            state.isLoadingUpdateCart = false;
+            state.cart = action.payload.data.products;
+            state.numOfCartItems = action.payload.numOfCartItems;
+            state.totalCartPrice = action.payload.data.totalCartPrice;
+            toast.success("Quantity updated successfully");
+        });
+        builder.addCase(updateCart.rejected,(state,action)=>{
+            state.isLoadingUpdateCart = false;
+            state.isError = action.payload;
+        });
+/////////////////////////////////removeFromCart/////////////////////////////////////////////
+        builder.addCase(removeFromCart.pending,(state)=>{
+            state.isLoadingDeleteCart = true;
+        });
+        builder.addCase(removeFromCart.fulfilled,(state,action)=>{
+            state.isLoadingDeleteCart = false;
+            state.cart = action.payload.data.products;
+            state.numOfCartItems = action.payload.numOfCartItems;
+            state.totalCartPrice = action.payload.data.totalCartPrice;
+            toast.success("Product removed from cart");
+        });
+        builder.addCase(removeFromCart.rejected,(state,action)=>{
+            state.isLoadingDeleteCart = false;
+            state.isError = action.payload;
+        });
+    }
 });
 
 export const cartReducer = cartSlice.reducer;
-export const cartActions = cartSlice.actions;
+export const {isLoadingAddToCart,isLoadingGetCart, isLoadingUpdateCart, isLoadingDeleteCart, isError, cart, clearWhenLogot} = cartSlice.actions;

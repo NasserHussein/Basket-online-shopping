@@ -5,15 +5,16 @@ import ProductDetails from "../ProductDetails/ProductDetails";
 // const dateOptions = { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: true };
 
 export default function Products({ data }) {
-	const isIdle = useSelector((state) => state.cart.loading === "idle");
-	const isLoading = useSelector((state) => state.cart.loading === "pending");
-	const isSuccess = useSelector((state) => state.cart.loading === "succeeded");
-	const isError = useSelector((state) => state.cart.loading === "failed");
+	// const isIdle = useSelector((state) => state.cart.loading === "idle");
+	// const isLoading = useSelector((state) => state.cart.loading === "pending");
+	// const isSuccess = useSelector((state) => state.cart.loading === "succeeded");
+	// const isError = useSelector((state) => state.cart.loading === "failed");
+
 
 	return (
 		<>
-			{isIdle && (
-				// the starter Component before trying loading data replace the folowing component with starting UI
+				{/* // the starter Component before trying loading data replace the folowing component with starting UI */}
+			{/* {isIdle  && ( */}
 
 				<div className="border my-5 rounded overflow-hidden grid xl:grid-cols-3 md:grid-cols-2">
 					{data.map((item) => (
@@ -32,15 +33,15 @@ export default function Products({ data }) {
 						/>
 					))}
 				</div>
-			)}
+			{/* )} */}
 
-			{
+			{/* {
 				isLoading
 
 				// loading spinner for fetching data
-			}
+			} */}
 
-			{isSuccess && (
+			{/* {isSuccess && (
 				<div className="border my-5 rounded overflow-hidden grid xl:grid-cols-3 md:grid-cols-2">
 					{data.map((item) => (
 						<Card

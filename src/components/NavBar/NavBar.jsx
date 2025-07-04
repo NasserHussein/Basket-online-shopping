@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TopBar from '../TopBar/TopBar'
 import { Link, NavLink } from 'react-router-dom'
 import Logo from '../../assets/logo.png' 
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../../redux/slices/authSlice';
+import { clearWhenLogot, getCart } from '../../redux/slices/cartSlice';
 
 export default function NavBar() {
   const [openSearch, setOpenSearch] = useState(false);
@@ -11,6 +12,7 @@ export default function NavBar() {
   const [showUser, setShowUser] = useState(false);
   const dispatch = useDispatch();
   let {token} = useSelector((store)=>store.authReducer);
+  let { numOfCartItems, totalCartPrice } = useSelector((store)=>store.cartReducer);
   const toggleState = (state, seter) => seter(!state);
   const navLinks = [
     { t: 'home' , l:'/'},
@@ -24,6 +26,15 @@ export default function NavBar() {
     dispatch(setToken(null));
     setShowUser(false);
   }
+
+  useEffect(()=>{
+    if(token){
+      dispatch(getCart());
+    }else{
+      dispatch(clearWhenLogot());
+    }
+  },[totalCartPrice,token]);
+
   return <>
     <TopBar/>
     <nav className='container pb-4'>
@@ -71,8 +82,8 @@ export default function NavBar() {
               }
 
             </div>
-            <p className='font-semibold cursor-default'>$0.00</p>
-            <Link to={''}>
+            <p className='font-semibold cursor-default'>${totalCartPrice}.00</p>
+            <Link to={'/checkout'}>
               <div className='size-8 sm:size-[42px] bg-[#FFF1EE] flex justify-center items-center rounded-full relative'>
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_1_3014)">
@@ -85,7 +96,7 @@ export default function NavBar() {
                   </defs>
                 </svg>
                 <span className='text-white text-[10px] size-3 sm:size-[17px] bg-[#EA2B0F] flex justify-center items-center rounded-full absolute top-0 -end-[8%]'>
-                  0
+                  {numOfCartItems}
                 </span>
               </div>
             </Link>
