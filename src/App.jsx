@@ -20,6 +20,8 @@ import ProdectedResetPassword from './components/ProtectedRoute/ProdectedResetPa
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Wishlist from './components/Wishlist/Wishlist';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Orders from './pages/Orders';
 
 if (!localStorage.getItem("addedProducts")) {
   localStorage.setItem("addedProducts", JSON.stringify([]));
@@ -38,15 +40,22 @@ const routers = createBrowserRouter([{
     { path: "/aboutUs", element: <AboutUs /> },
     { path: "/blog", element: <Blog /> },
     { path: "/contact", element: <Contact /> },
+    { path: "/orders", element: <Orders /> },
   ]
 }]);
 
 function App() {
+
+  const queryClient = new QueryClient();
+
+
   return <>
-    <Provider store={store}>
-      <RouterProvider router={routers}></RouterProvider>
-      <Toaster/>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <RouterProvider router={routers} />
+        <Toaster />
+      </Provider>
+    </QueryClientProvider>
   </>
 }
 
