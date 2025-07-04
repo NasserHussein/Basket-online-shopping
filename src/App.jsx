@@ -40,6 +40,7 @@ const routers = createBrowserRouter([{
     { path: "/aboutUs", element: <AboutUs /> },
     { path: "/blog", element: <Blog /> },
     { path: "/contact", element: <Contact /> },
+    { path: "/allorders", element: <Orders /> },
   ]
 }]);
 const queryClient = new QueryClient();
