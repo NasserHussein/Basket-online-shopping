@@ -2,12 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .social-style {
-  @apply flex w-[48%] cursor-pointer items-center gap-5 rounded-md p-2.5 text-[14px] text-white sm:w-full;
+	@apply flex w-[48%] cursor-pointer items-center gap-5 rounded-md p-2.5 text-[14px] text-white sm:w-full;
 }
 
 .li-style {
-  @apply text-center px-2 w-fit border hover:cursor-pointer hover:bg-gray-100 duration-200;
+	@apply text-center px-2 w-fit border hover:cursor-pointer hover:bg-gray-100 duration-200;
+}
+
+.swiper-slide {
+	padding: 2rem;
+}
+
+.swiper-pagination {
+	@apply flex justify-start p-4 items-center;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+	@apply relative bg-gray-500/50 after:absolute after:w-1 after:rounded-full after:h-1 after:bg-gray-800 flex justify-center items-center ;
+	width: 12px !important;
+	height: 12px !important;
+}
+
+.swiper-pagination-bullet {
+	width: 8px !important;
+	height: 8px !important;
+}
+
+.showcaseImg {
+	background: url("./assets/showcase.png") no-repeat center/cover;
 }

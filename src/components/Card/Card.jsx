@@ -16,7 +16,11 @@ export default function Card({ id, ratingsQuantity, price, img, title, descripti
 	const { token } = useSelector((store) => store.authReducer);
 	const { loading, WishListArrID } = useSelector((store) => store.wishlistReducer);
 	const formattedDescription = formatText("description", description);
-	const formattedDate = formatDateTime(createdAt, { locale: "US-EG", dateStyle: "full", timeStyle: "short" });
+	const formattedDate = formatDateTime(createdAt, {
+		locale: "US-EG",
+		dateStyle: "full",
+		timeStyle: "short",
+	});
 	const formattedTitle = formatText("title", title);
 	const handleProductClick = (id) => {
 		dispatch(getSpecificProduct(id));
@@ -47,15 +51,19 @@ export default function Card({ id, ratingsQuantity, price, img, title, descripti
 	};
 	return (
 		<>
-			<div className="border-r  border-b relative p-5 cursor-pointer" onClick={() => { handleProductClick(id) }}>
+			<div className="border-r space-y-2 border-b relative p-5">
 				<div className="flex justify-center items-center flex-col">
-					<span className="bg-teal-500 px-3 py-1 text-white rounded-[4px] absolute top-3 left-3">{ratingsQuantity}%</span>
-					<span className="bg-red-500 px-3 py-1 text-white rounded-[4px] absolute top-3 right-3">${price}</span>
+					<span className="bg-teal-500 px-3 py-1 text-white rounded-[4px] absolute top-3 left-3">
+						{ratingsQuantity}%
+					</span>
 					<img
+						onClick={() => {
+							handleProductClick(id);
+						}}
 						src={img}
 						alt={`${title} image`}
 						loading="lazy"
-						className="lg:w-44"
+						className="w-44 h-44 cursor-pointer"
 					/>
 				</div>
 				<div className="flex flex-col gap-4">
@@ -87,13 +95,18 @@ export default function Card({ id, ratingsQuantity, price, img, title, descripti
 						className={`text-2xl ${loading && 'cursor-default'} transition-all hover:scale-125 hover:text-rose-500 ${WishListArrID.includes(id) ? 'text-rose-500' : 'text-rose-300'}`}
 					/>
 				</div>
-				<p className="text-gray-400 text-sm mt-5"> Published on {formattedDate}</p>
-				<button
-					onClick={(e) => { handelAddToCart(e, id) }}
-					type="button"
-					className="text-black mt-4 w-full bg-[#FFCD00] hover:bg-yellow-500 focus:outline-none  font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 ">
-					add to cart
-				</button>
+				<p className="text-red-500 font-semibold">
+					{priceAfterDiscount ? (
+						<span className="line-through text-gray-300 font-normal">${priceAfterDiscount}</span>
+					) : (
+						""
+					)}{" "}
+					${price}
+				</p>
+				<p className="text-gray-400 text-sm mb-5"> Published on {formattedDate}</p>
+				<Button primary>
+					Add to cart
+				</Button>
 			</div>
 		</>
 	);
