@@ -4,7 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { jwtDecode } from 'jwt-decode';
 import { useSelector } from 'react-redux';
-import Loading from '../components/Loading/Loading';
+import Loading from '../Loading/Loading';
 
 
 function Orders() {
