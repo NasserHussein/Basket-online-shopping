@@ -15,13 +15,13 @@ export default function NavBar() {
   let { numOfCartItems, totalCartPrice } = useSelector((store)=>store.cartReducer);
   const toggleState = (state, seter) => seter(!state);
   const navLinks = [
-    { t: 'home' , l:'/'},
-    { t: 'shop', l:'/products'},
-    { t: 'fashion', l:'/wait'},
-    { t: 'electronics', l:'/wait'},
-    { t: 'blog', l:'/blog'},
-    { t: 'contact', l:'/contact'},
-  ];
+		{ t: "home", l: "/" },
+		{ t: "shop", l: "/products" },
+		{ t: "fashion", l: "/Men's Fashion" },
+		{ t: "electronics", l: "/Electronics" },
+		{ t: "blog", l: "/blog" },
+		{ t: "contact", l: "/contact" },
+	];
   const logout = () => {
     dispatch(setToken(null));
     setShowUser(false);
