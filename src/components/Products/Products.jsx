@@ -26,9 +26,10 @@ export default function Products({ data }) {
 							ratingsAverage={item?.ratingsAverage}
 							ratingsQuantity={item?.ratingsQuantity}
 							key={item?.id}
-							title={item?.title.split(" ").slice(0, 3).join(" ") + '...'}
+							title={item?.title.split(" ").slice(0, 3).join(" ") + "..."}
 							description={item?.description}
 							id={item?.id}
+							priceAfterDiscount={item?.priceAfterDiscount}
 						/>
 					))}
 				</div>
@@ -51,7 +52,7 @@ export default function Products({ data }) {
 							ratingsAverage={item?.ratingsAverage}
 							ratingsQuantity={item?.ratingsQuantity}
 							key={item?._id}
-							title={item?.title.split(" ").slice(0, 3).join(" ") + '...'}
+							title={item?.title.split(" ").slice(0, 3).join(" ") + "..."}
 							description={item?.description}
 							id={item?.id}
 						/>
@@ -62,8 +63,8 @@ export default function Products({ data }) {
 			{
 				isError
 				// using error state with custom error component for render the title of problem with corseponding massage for this specific error
-			} */}
-			<ProductDetails/>
+			}
+			<ProductDetails />
 		</>
 	);
 }
