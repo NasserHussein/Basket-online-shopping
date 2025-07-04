@@ -12,6 +12,7 @@ export default function TopBar() {
         <ul className='capitalize flex gap-x-2 sm:gap-x-[15px]'>
           <Link to="/aboutUs" className='hover:text-main'><li>about us</li></Link>
           <Link to="/wishlist" className='hover:text-main'><li>wishlist</li></Link>
+          <Link to="/allorders" className='hover:text-main'><li>my orders</li></Link>
         </ul>
           <div className='flex  gap-x-[18px] items-center'>
               <p className='[@media(min-width:671px)]:[display:flex] hidden justify-center items-center'>
