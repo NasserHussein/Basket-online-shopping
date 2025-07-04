@@ -20,8 +20,8 @@ import ProdectedResetPassword from './components/ProtectedRoute/ProdectedResetPa
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Wishlist from './components/Wishlist/Wishlist';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Orders from './pages/Orders';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 if (!localStorage.getItem("addedProducts")) {
   localStorage.setItem("addedProducts", JSON.stringify([]));
@@ -35,27 +35,23 @@ const routers = createBrowserRouter([{
     { path: "/forgot-password", element: <RestrictedRoute><ForgetPassword /></RestrictedRoute> },
     { path: "/verify-code", element: <RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode /></ProudectVerifyCodeRoute></RestrictedRoute> },
     { path: "/reset-password", element: <RestrictedRoute><ProdectedResetPassword><ResetPassword /></ProdectedResetPassword></RestrictedRoute> },
-    { path: "/checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
+    { path: "/cart", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
     { path: "/wishlist", element: <ProtectedRoute><Wishlist /></ProtectedRoute> },
     { path: "/aboutUs", element: <AboutUs /> },
     { path: "/blog", element: <Blog /> },
     { path: "/contact", element: <Contact /> },
-    { path: "/orders", element: <Orders /> },
   ]
 }]);
-
+const queryClient = new QueryClient();
 function App() {
-
-  const queryClient = new QueryClient();
-
-
   return <>
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <RouterProvider router={routers} />
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={routers}></RouterProvider>
         <Toaster />
-      </Provider>
-    </QueryClientProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Provider>
   </>
 }
 
