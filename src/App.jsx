@@ -33,7 +33,7 @@ const routers = createBrowserRouter([{
     { path: "/forgot-password", element: <RestrictedRoute><ForgetPassword /></RestrictedRoute> },
     { path: "/verify-code", element: <RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode /></ProudectVerifyCodeRoute></RestrictedRoute> },
     { path: "/reset-password", element: <RestrictedRoute><ProdectedResetPassword><ResetPassword /></ProdectedResetPassword></RestrictedRoute> },
-    { path: "/checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
+    { path: "/cart", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
     { path: "/wishlist", element: <ProtectedRoute><Wishlist /></ProtectedRoute> },
     { path: "/aboutUs", element: <AboutUs /> },
     { path: "/blog", element: <Blog /> },

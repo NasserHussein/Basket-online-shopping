@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const initialState = {isLoadingAddToCart: false,isLoadingGetCart: false, isLoadingUpdateCart: false, isLoadingDeleteCart: false, cart:[], isError:null, numOfCartItems: 0, totalCartPrice: 0};
+const initialState = {isLoadingAddToCart: false,isLoadingGetCart: false, isLoadingUpdateCart: false, isLoadingDeleteCart: false, cart:[], isError:null, numOfCartItems: 0, totalCartPrice: 0, cartId: null };
 
 export let getCart = createAsyncThunk('cart/getCart',async () =>{
     let {data} = await axios.get('https://ecommerce.routemisr.com/api/v1/cart',{
@@ -54,6 +54,7 @@ let cartSlice = createSlice({
         builder.addCase(addToCart.fulfilled,(state,action)=>{
             state.isLoadingAddToCart = false;
             state.cart = action.payload.data.products;
+            state.cartId = action.payload.cartId;
             state.numOfCartItems = action.payload.numOfCartItems;
             state.totalCartPrice = action.payload.data.totalCartPrice;
             toast.success(action.payload.message);
@@ -70,6 +71,7 @@ let cartSlice = createSlice({
         builder.addCase(getCart.fulfilled,(state,action)=>{
             state.isLoadingGetCart = false;
             state.cart = action.payload.data.products;
+            state.cartId = action.payload.cartId;
             state.numOfCartItems = action.payload.numOfCartItems;
             state.totalCartPrice = action.payload.data.totalCartPrice;
         });
@@ -84,6 +86,7 @@ let cartSlice = createSlice({
         builder.addCase(updateCart.fulfilled,(state,action)=>{
             state.isLoadingUpdateCart = false;
             state.cart = action.payload.data.products;
+            state.cartId = action.payload.cartId;
             state.numOfCartItems = action.payload.numOfCartItems;
             state.totalCartPrice = action.payload.data.totalCartPrice;
             toast.success("Quantity updated successfully");
@@ -111,4 +114,4 @@ let cartSlice = createSlice({
 });
 
 export const cartReducer = cartSlice.reducer;
-export const {isLoadingAddToCart,isLoadingGetCart, isLoadingUpdateCart, isLoadingDeleteCart, isError, cart, clearWhenLogot} = cartSlice.actions;
+export const {isLoadingAddToCart,isLoadingGetCart, isLoadingUpdateCart, isLoadingDeleteCart, isError, cart, clearWhenLogot, cartId} = cartSlice.actions;
