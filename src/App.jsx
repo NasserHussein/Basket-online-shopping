@@ -20,6 +20,8 @@ import ProdectedResetPassword from './components/ProtectedRoute/ProdectedResetPa
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Wishlist from './components/Wishlist/Wishlist';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 if (!localStorage.getItem("addedProducts")) {
   localStorage.setItem("addedProducts", JSON.stringify([]));
@@ -33,19 +35,22 @@ const routers = createBrowserRouter([{
     { path: "/forgot-password", element: <RestrictedRoute><ForgetPassword /></RestrictedRoute> },
     { path: "/verify-code", element: <RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode /></ProudectVerifyCodeRoute></RestrictedRoute> },
     { path: "/reset-password", element: <RestrictedRoute><ProdectedResetPassword><ResetPassword /></ProdectedResetPassword></RestrictedRoute> },
-    { path: "/checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
+    { path: "/cart", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
     { path: "/wishlist", element: <ProtectedRoute><Wishlist /></ProtectedRoute> },
     { path: "/aboutUs", element: <AboutUs /> },
     { path: "/blog", element: <Blog /> },
     { path: "/contact", element: <Contact /> },
   ]
 }]);
-
+const queryClient = new QueryClient();
 function App() {
   return <>
     <Provider store={store}>
-      <RouterProvider router={routers}></RouterProvider>
-      <Toaster/>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={routers}></RouterProvider>
+        <Toaster />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </Provider>
   </>
 }

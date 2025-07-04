@@ -17,8 +17,8 @@ export default function NavBar() {
   const navLinks = [
     { t: 'home' , l:'/'},
     { t: 'shop', l:'/products'},
-    { t: 'fashion', l:'/wait'},
-    { t: 'electronics', l:'/wait'},
+    { t: 'fashion', l: '/fashion'},
+    { t: 'electronics', l:'/electronics'},
     { t: 'blog', l:'/blog'},
     { t: 'contact', l:'/contact'},
   ];
@@ -83,7 +83,7 @@ export default function NavBar() {
 
             </div>
             <p className='font-semibold cursor-default'>${totalCartPrice}.00</p>
-            <Link to={'/checkout'}>
+            <Link to={'/cart'}>
               <div className='size-8 sm:size-[42px] bg-[#FFF1EE] flex justify-center items-center rounded-full relative'>
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_1_3014)">
