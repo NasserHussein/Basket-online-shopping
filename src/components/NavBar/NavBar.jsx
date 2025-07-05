@@ -17,8 +17,8 @@ export default function NavBar() {
   const navLinks = [
     { t: 'home' , l:'/'},
     { t: 'shop', l:'/products'},
-    { t: 'fashion', l: "/Men's Fashion"},
-    { t: 'electronics', l:'/Electronics'},
+    { t: 'fashion', l: '/fashion'},
+    { t: 'electronics', l:'/electronics'},
     { t: 'blog', l:'/blog'},
     { t: 'contact', l:'/contact'},
   ];
