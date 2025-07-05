@@ -5,7 +5,7 @@ import Layout from './components/Layout/Layout';
 import Home from './pages/Home';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import Checkout from './pages/Checkout';
+import Checkout from './components/Checkout/Checkout';
 import AboutUs from './components/About Us/AboutUs'
 import Blog from './components/Blog/Blog'
 import Contact from './pages/Contact'
@@ -38,10 +38,10 @@ const routers = createBrowserRouter([{
     { path: "/reset-password", element: <RestrictedRoute><ProdectedResetPassword><ResetPassword /></ProdectedResetPassword></RestrictedRoute> },
     { path: "/cart", element: <ProtectedRoute><Checkout /></ProtectedRoute> },
     { path: "/wishlist", element: <ProtectedRoute><Wishlist /></ProtectedRoute> },
+    { path: "/allorders", element: <ProtectedRoute><Orders /></ProtectedRoute> },
     { path: "/aboutUs", element: <AboutUs /> },
     { path: "/blog", element: <Blog /> },
     { path: "/contact", element: <Contact /> },
-    { path: "/allorders", element: <Orders /> },
   ]
 }]);
 const queryClient = new QueryClient();

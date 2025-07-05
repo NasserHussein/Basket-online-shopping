@@ -4,14 +4,15 @@ import { specificProductReducer } from "./slices/specificProductSlice";
 import { cartReducer } from "./slices/cartSlice";
 import { authReducer } from "./slices/authSlice";
 import wishlistReducer from "./slices/wishlistSlice";
+import { searchReducer } from "./slices/searchSlice";
 
 export let store = configureStore({
     reducer:{
         products: productsReducer,
         specificProducts: specificProductReducer,
-        // cart:cartReducer,
         cartReducer,
         authReducer,
-        wishlistReducer
+        wishlistReducer,
+        searchReducer
     }
 });

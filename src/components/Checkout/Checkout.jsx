@@ -1,9 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import ContactForm from "../components/checkout/ContactForm";
-import DeliveryForm from "../components/checkout/DeliveryForm";
-import ShippingAndPayment from "../components/checkout/ShippingAndPayment";
-import { removeFromCart, updateCart } from "../redux/slices/cartSlice";
-import Form from "../components/Checkout/Form";
+import { removeFromCart, updateCart } from "../../redux/slices/cartSlice";
+import Form from "../Checkout/Form";
 
 const Checkout = () => {
 	const { cart, numOfCartItems, totalCartPrice, isLoadingUpdateCart, isLoadingDeleteCart } = useSelector((store) => store.cartReducer);
@@ -12,9 +9,6 @@ const Checkout = () => {
 		<div className="container mx-auto flex flex-col gap-2 py-10 lg:flex-row">
 			<div className="flex-1 space-y-10">
 				<Form/>
-				{/* <ContactForm /> */}
-				{/* <DeliveryForm /> */}
-				{/* <ShippingAndPayment /> */}
 			</div>
 			<div className="hidden w-px bg-gray-300 lg:block" />
 			<div className="block h-px bg-gray-300 lg:hidden" />
