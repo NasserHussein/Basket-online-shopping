@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import Stars from "../StarSvg/Stars";
 import { formatDateTime } from "../../utils/formatDate";
