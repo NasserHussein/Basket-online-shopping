@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getData } from "../../utils/getData";
 
 export default function Products({ data }) {
-	const { isLoading, isFetched } = useQuery({
+	const { isLoading } = useQuery({
 		queryKey: ["products"],
 		queryFn: () => getData("products"),
 	});
@@ -15,7 +15,7 @@ export default function Products({ data }) {
 		<>
 			<div className="border my-5 rounded overflow-hidden grid xl:grid-cols-3 md:grid-cols-2">
 				{isLoading && <Loading />}
-				{isFetched &&
+				{data &&
 					data.map((item) => {
 
 						return (

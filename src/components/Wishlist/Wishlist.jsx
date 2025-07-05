@@ -6,6 +6,7 @@ import { getWishlist, removeItemFromWishlist } from '../../redux/slices/wishlist
 import Loading from '../Loading/Loading';
 import ProductDetails from '../ProductDetails/ProductDetails';
 import { clearProduct, getSpecificProduct, setShowModal } from '../../redux/slices/specificProductSlice';
+import toast from 'react-hot-toast';
 export default function Wishlist() {
   let { items, loadingGetWishlist } = useSelector((store) => store.wishlistReducer);
   let { token } = useSelector((store) => store.authReducer);
@@ -61,8 +62,8 @@ export default function Wishlist() {
                 />
               </div>
               <div className="flex flex-col gap-4">
-                <h1 className="font-semibold text-lg">{item?.title}</h1>
-                <p className="text-gray-300">{item?.description}</p>
+                <h1 className="font-semibold text-lg">{item?.title?.split(" ").slice(0,3).join(" ")}</h1>
+                <p className="text-gray-300">{item?.description?.split(" ").slice(0,7).join(" ")}</p>
                 {item?.quantity > 1 && <p className="text-[#00B853] font-semibold">{item?.quantity} IN STOCK</p>}
                 {item?.quantity < 1 && <p className="text-red-400 font-semibold">OUT OF STOCK</p>}
               </div>
