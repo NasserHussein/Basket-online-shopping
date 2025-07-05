@@ -37,7 +37,7 @@ export default function Form() {
                 let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartId}?url=http://localhost:5173`, { shippingAddress }, { headers });
                 setApiError(null);
                 setLoading(false);
-                navigate('/');
+                navigate('/allorders');
                 toast.success(data.status);
             } catch (error) {
                 setApiError(error.response.data.message);
@@ -92,37 +92,35 @@ export default function Form() {
                     className="border border-gray-300 text-gray-900 text-base rounded-md focus:ring-main focus:border-main outline-0 block w-full py-4 px-2.5"/>
                 {formik.errors.details && formik.touched.details && <div className="text-red-500 text-sm mt-2 ms-2">{formik.errors.details}</div>}
             </div>
-
-        <div className="space-y-8">
-            <div>
-                <h2 className="text-xl font-semibold mb-4">Payment method</h2>
-                <div onClick={()=>setOnlinePayment(true)} className="relative mb-6">
-                    <div className={`w-full cursor-pointer  border ${onlinePayment && 'border-[#1773B0] bg-[#F0F5FF]'} rounded px-4 py-3 text-sm text-gray-700`}>
-                        <div className="flex justify-between items-center">
-                            <span className=" font-bold">Online payment</span>
-                            <span className=" font-bold">Free</span>
+            <div className="space-y-8">
+                <div>
+                    <h2 className="text-xl font-semibold mb-4">Payment method</h2>
+                    <div onClick={()=>setOnlinePayment(true)} className="relative mb-6">
+                        <div className={`w-full cursor-pointer  border ${onlinePayment && 'border-[#1773B0] bg-[#F0F5FF]'} rounded px-4 py-3 text-sm text-gray-700`}>
+                            <div className="flex justify-between items-center">
+                                <span className=" font-bold">Online payment</span>
+                                <span className=" font-bold">Free</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                    <div onClick={() => setOnlinePayment(false)} className="relative mb-8">
-                    <div className={`w-full cursor-pointer  border ${!onlinePayment && 'border-[#1773B0] bg-[#F0F5FF]'} rounded px-4 py-3 text-sm text-gray-700`}>
-                        <div className="flex justify-between items-center">
-                            <span className=" font-bold">Cash payment</span>
-                            <span className=" font-bold">Free</span>
+                        <div onClick={() => setOnlinePayment(false)} className="relative mb-8">
+                        <div className={`w-full cursor-pointer  border ${!onlinePayment && 'border-[#1773B0] bg-[#F0F5FF]'} rounded px-4 py-3 text-sm text-gray-700`}>
+                            <div className="flex justify-between items-center">
+                                <span className=" font-bold">Cash payment</span>
+                                <span className=" font-bold">Free</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-            <button type="submit" disabled={loading}
-                className={`text-white bg-[#303841] ${loading ? "bg-gray-600" : "hover:bg-main cursor-pointer"}  focus:ring-1 focus:outline-none focus:ring-red-300 font-medium  text-sm w-full sm:w-auto px-3 py-2.5 text-center`}>
-                <span className="pe-2">{loading ? "Loading" : "Check Out"}</span>
-                {loading ?
-                    <i className="fa-solid fa-spinner fa-spin-pulse"></i> :
-                    <i className="fa-solid fa-arrow-right-long -mb-1"></i>
-                }
-            </button>
+        <button type="submit" disabled={loading}
+            className={`text-white bg-[#303841] ${loading ? "bg-gray-600" : "hover:bg-main cursor-pointer"}  focus:ring-1 focus:outline-none focus:ring-red-300 font-medium  text-sm w-full sm:w-auto px-3 py-2.5 text-center`}>
+            <span className="pe-2">{loading ? "Loading" : "Check Out"}</span>
+            {loading ?
+                <i className="fa-solid fa-spinner fa-spin-pulse"></i> :
+                <i className="fa-solid fa-arrow-right-long -mb-1"></i>
+            }
+        </button>
         </form>  
   </>
 }

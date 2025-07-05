@@ -5,6 +5,7 @@ import Logo from '../../assets/logo.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../../redux/slices/authSlice';
 import { clearWhenLogot, getCart } from '../../redux/slices/cartSlice';
+import FormSearch from './FormSearch';
 
 export default function NavBar() {
   const [openSearch, setOpenSearch] = useState(false);
@@ -17,8 +18,8 @@ export default function NavBar() {
   const navLinks = [
     { t: 'home' , l:'/'},
     { t: 'shop', l:'/products'},
-    { t: 'fashion', l: '/fashion'},
-    { t: 'electronics', l:'/electronics'},
+    { t: 'fashion', l:"/Men's Fashion"},
+    { t: 'electronics', l:'/Electronics'},
     { t: 'blog', l:'/blog'},
     { t: 'contact', l:'/contact'},
   ];
@@ -43,14 +44,7 @@ export default function NavBar() {
           <Link to='/'><img src={Logo} alt="basket logo" /></Link>
           </div>
           <div className='w-[52%] hidden lg:block'>
-            <form className="max-w-md mx-auto">
-              <div className="relative">
-              <input type="text" className="block w-full px-4 py-4 outline-0 text-sm text-gray-900 border rounded-sm bg-[#F3F4F7] placeholder:text-sm" placeholder="Search for Products, fruit, meat, eggs .etc..." required />
-              <button type="submit" className="absolute end-0 bottom-0 top-0 focus:ring-4 focus:outline-none text-[#3E445A] font-medium rounded-lg text-lg px-4">
-                <i className="fa-solid fa-magnifying-glass"></i>
-                </button>
-              </div>
-            </form>
+            <FormSearch/>
           </div>
           <div className='flex justify-center items-center gap-x-2 sm:gap-x-6'>
             <button onClick={() => toggleState(openSearch, setOpenSearch) } className='cursor-pointer text-[#3E445A] text-xl lg:hidden'><i className="fa-solid fa-magnifying-glass"></i></button>
@@ -124,14 +118,7 @@ export default function NavBar() {
         </div>
       {openSearch && 
         <div className='w-full mt-3 lg:hidden'>
-          <form className="max-w-md mx-auto">
-            <div className="relative">
-              <input type="text" className="block w-full px-4 py-4 outline-0 text-sm text-gray-900 border rounded-sm bg-[#F3F4F7] placeholder:text-sm" placeholder="Search for Products, fruit, meat, eggs .etc..." required />
-              <button type="submit" className="absolute end-0 bottom-0 top-0 focus:ring-4 focus:outline-none text-[#3E445A] font-medium rounded-lg text-lg px-4">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </div>
-          </form>
+          <FormSearch />
         </div>
       }
       {openMenu &&
