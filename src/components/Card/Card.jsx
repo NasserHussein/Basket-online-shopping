@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import Stars from "../StarSvg/Stars";
 import { formatDateTime } from "../../utils/formatDate";
@@ -10,8 +9,6 @@ import toast from "react-hot-toast";
 import { addToWishlist, removeItemFromWishlist } from "../../redux/slices/wishlistSlice";
 
 export default function Card({ id, ratingsQuantity, price, img, title, description, createdAt, quantity, ratingsAverage }) {
-  // const [heartClasses, setHeartClasses] = useState("text-rose-300");
-  // const [isFavourite, setIsFavourite] = useState(false);
   const dispatch = useDispatch();
   const { token } = useSelector((store) => store.authReducer);
   const { loading, WishListArrID } = useSelector((store) => store.wishlistReducer);
@@ -78,13 +75,6 @@ export default function Card({ id, ratingsQuantity, price, img, title, descripti
                   handelRemoveItemFromWishlist(id) :
                   handelAddToWishlist(id)
             }}
-            // onMouseDown={() => {
-            // 	 setIsFavourite((prevFavourite) => (!prevFavourite ? true : false));
-            // 	setHeartClasses(`hover:scale-75 ${!isFavourite ? "text-rose-500" : "text-rose-300"}`);
-            // }}
-            // onMouseUp={() => setHeartClasses(`hover:scale-125 ${WishListArrID.includes(id) ? "text-rose-500" : "text-rose-300"}`)}
-            // onMouseLeave={() => setHeartClasses(`hover:scale-100 ${WishListArrID.includes(id) ? "text-rose-500" : "text-rose-300"}`)}
-            // onMouseEnter={() => setHeartClasses(`hover:scale-125 ${WishListArrID.includes(id) ? "text-rose-500" : "text-rose-300"}`)}
             className={`text-2xl ${loading && 'cursor-default'} transition-all hover:scale-125 hover:text-rose-500 ${WishListArrID.includes(id) ? 'text-rose-500' : 'text-rose-300'}`}
           />
         </div>

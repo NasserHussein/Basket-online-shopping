@@ -31,6 +31,7 @@ if (!localStorage.getItem("addedProducts")) {
 const routers = createBrowserRouter([{
   path: '', element: <Layout />, children: [
     { index: true, element: <Home /> },
+    {path: "/:type", element: <Home />},
     { path: "/sign-in", element: <RestrictedRoute><Login /></RestrictedRoute> },
     { path: "/sign-up", element: <RestrictedRoute><Register /></RestrictedRoute> },
     { path: "/forgot-password", element: <RestrictedRoute><ForgetPassword /></RestrictedRoute> },
