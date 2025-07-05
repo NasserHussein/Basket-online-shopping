@@ -9,8 +9,6 @@ import toast from "react-hot-toast";
 import { addToWishlist, removeItemFromWishlist } from "../../redux/slices/wishlistSlice";
 
 export default function Card({ id, ratingsQuantity, price, img, title, description, createdAt, quantity, ratingsAverage }) {
-  // const [heartClasses, setHeartClasses] = useState("text-rose-300");
-  // const [isFavourite, setIsFavourite] = useState(false);
   const dispatch = useDispatch();
   const { token } = useSelector((store) => store.authReducer);
   const { loading, WishListArrID } = useSelector((store) => store.wishlistReducer);
