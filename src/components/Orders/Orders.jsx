@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { jwtDecode } from 'jwt-decode';
 import { useSelector } from 'react-redux';
 import Loading from '../Loading/Loading';
+import { Helmet } from 'react-helmet';
 
 
 function Orders() {
@@ -27,10 +28,12 @@ function Orders() {
   if (isLoading) return <p className="text-center py-8 text-lg"><Loading /></p>;
   if (!orders || orders.length === 0) return <p className="text-center py-20 text-lg">No orders found.</p>;
 
-  return (
+  return <>
+    <Helmet>
+      <title>My Orders</title>
+    </Helmet>
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold text-center uppercase mb-8">All Orders</h2>
-
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-gray-100 text-gray-700 text-sm uppercase">
@@ -101,7 +104,7 @@ function Orders() {
         </div>
       )}
     </div>
-  );
+    </>
 }
 
 export default Orders;

@@ -1,10 +1,13 @@
 import { FaLocationDot } from 'react-icons/fa6';
 import { PiPhoneCall } from 'react-icons/pi';
 import { LuMail } from 'react-icons/lu';
+import { Helmet } from 'react-helmet';
 
 export default function Contact() {
-  return (
-    <>
+  return <>
+      <Helmet>
+        <title>Contact</title>
+      </Helmet>
       {/* first section */}
       <div className="h-auto p-8 md:p-20 text-center text-5xl text-black">
         <h2 className="mb-4">Get In Touch</h2>
@@ -131,5 +134,4 @@ export default function Contact() {
         </form>
       </div>
     </>
-  );
 }

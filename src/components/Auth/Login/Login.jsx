@@ -6,6 +6,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../../redux/slices/authSlice';
+import { Helmet } from 'react-helmet';
 
 export default function Login() {
 
@@ -46,6 +47,9 @@ export default function Login() {
 
     return (
         <>
+            <Helmet>
+                <title>Login</title>
+            </Helmet>
             <section className="py-10 px-12">
                 <div className="flex justify-center uppercase font-bold">
                     <h2 className="w-fit relative text-3xl tracking-wide after:w-1/3 after:h-[1px] after:bg-main after:absolute after:-bottom-3 after:start-1/2 after:-translate-x-1/2 text-[#3e445a]">

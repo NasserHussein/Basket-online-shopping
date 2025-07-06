@@ -125,12 +125,15 @@ export default function NavBar() {
         <div onClick={()=> setOpenMenu(false)} className='bg-[#212529cc] z-50 fixed inset-0 lg:hidden'>
         <button className='cursor-pointer text-white text-3xl absolute md:end-[27%] md:top-[11%] end-[4%] top-[1%]'><i className="fa-solid fa-xmark"></i></button>
         <div onClick={(e) => e.stopPropagation()} className='bg-white absolute md:top-[20%] md:bottom-[20%] md:end-[30%] md:start-[30%] top-[10%] bottom-[10%] end-[10%] start-[10%] rounded-lg overflow-auto'>
-            <ul className='space-y-5 font-medium ms-5 mt-5 text-xl flex justify-between items-center flex-col'>
+            <ul className='space-y-5 font-medium  mt-5 text-xl flex justify-between items-center flex-col'>
               {navLinks.map((navLink, index)=>
-              <NavLink key={index} to={navLink.l}><li>{navLink.t}</li></NavLink>
+              <NavLink key={index} 
+              onClick={()=>setOpenMenu(false)}
+              className="py-1 w-full text-center"
+               to={navLink.l}><li>{navLink.t}</li></NavLink>
               )}
             </ul>
-            <div className='flex p-4 text-white bg-main rounded-full justify-center items-center w-fit mx-auto mt-4'>
+            <div className='flex p-4 text-white bg-main rounded-full justify-center items-center w-fit mx-auto my-4'>
               <span className='block'><i className="fa-solid fa-bars pe-4"></i></span>
               <span className='block uppercase font-semibold text-sm'>all categories</span>
             </div>
