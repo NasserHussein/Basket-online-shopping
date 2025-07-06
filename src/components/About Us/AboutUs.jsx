@@ -1,8 +1,12 @@
+import { Helmet } from "react-helmet";
 import Aboutpeople from "../../assets/about-people.jpg.png"
 
 export default function AboutUs() {
   return (
     <>
+      <Helmet>
+        <title>AboutUs</title>
+      </Helmet>
       <div className=" h-[400px] flex flex-col items-center justify-center bg-[url('/src/assets/about-header.jpg.png')] bg-cover bg-center text-center text-white shadow-md">
         <div className="flex h-full w-full flex-col items-center justify-center bg-[#00000066]">
           <h2 className="text-4xl font-bold">About for Bacola</h2>

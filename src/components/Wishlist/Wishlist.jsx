@@ -7,6 +7,7 @@ import Loading from '../Loading/Loading';
 import ProductDetails from '../ProductDetails/ProductDetails';
 import { clearProduct, getSpecificProduct, setShowModal } from '../../redux/slices/specificProductSlice';
 import toast from 'react-hot-toast';
+import { Helmet } from 'react-helmet';
 export default function Wishlist() {
   let { items, loadingGetWishlist } = useSelector((store) => store.wishlistReducer);
   let { token } = useSelector((store) => store.authReducer);
@@ -37,6 +38,9 @@ export default function Wishlist() {
     dispatch(getWishlist());
   }, []);
   return <>
+    <Helmet>
+      <title>Wishlist</title>
+    </Helmet>
     <div className="relative w-full h-[200px] overflow-hidden">
       <div className="absolute top-0 left-0 w-[200%] h-full animate-scroll-x flex">
         <img src={wishlistBg} alt="wishlist background" className="w-full object-cover" />

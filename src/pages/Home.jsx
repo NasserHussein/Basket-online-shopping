@@ -14,10 +14,12 @@ import { useParams } from "react-router-dom";
 import { getData } from "../utils/getData";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 export default function Home() {
 	const { type } = useParams();
-	
+	let { searchProducts } = useSelector((store) => store.searchReducer);
 
 	const isType = type ? true : false;
 	const requestType = isType ? type : "products";
@@ -55,7 +57,10 @@ export default function Home() {
 		currentproducts = data.slice(startIndex, endIndex);
 	}
 
-	return (
+	return <>
+		<Helmet>
+			<title>Basket Online Shopping</title>
+		</Helmet>
 		<div className="container md:grid md:grid-cols-12 gap-10 py-8">
 			<aside className="md:col-span-4">
 				<Sidebar />
@@ -110,16 +115,17 @@ export default function Home() {
 				</Grid>
 
 				{isLoading && <Loading />}
-				{isFetched && (
+				{isFetched && 
 					<>
-						<Products data={currentproducts} />
+					<Products data={searchProducts.search == "" ? currentproducts: data } />
+						{searchProducts.search == ""  ?
 						<Pagination
-							currentPage={currentPage}
-							totalPages={totalPages}
-							onPageChange={(page) => setCurrentPage(page)}
-						/>
+						currentPage={currentPage}
+						totalPages={totalPages}
+						onPageChange={(page) => setCurrentPage(page)} />: ""
+					}
 					</>
-				)}
+				}
 				{isError || (data && data.length < 2) &&
 					<div class="flex mt-5 items-center p-8 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
 					<svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -133,5 +139,5 @@ export default function Home() {
 				}
 			</main>
 		</div>
-	);
+	</>
 }

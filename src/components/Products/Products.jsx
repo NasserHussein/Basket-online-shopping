@@ -4,8 +4,10 @@ import ProductDetails from "../ProductDetails/ProductDetails";
 import Loading from "../Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "../../utils/getData";
+import { useSelector } from "react-redux";
 
 export default function Products({ data }) {
+	let { searchProducts } = useSelector((store) => store.searchReducer);
 	const { isLoading } = useQuery({
 		queryKey: ["products"],
 		queryFn: () => getData("products"),
@@ -16,7 +18,7 @@ export default function Products({ data }) {
 			<div className="border my-5 rounded overflow-hidden grid xl:grid-cols-3 md:grid-cols-2">
 				{isLoading && <Loading />}
 				{data &&
-					data.map((item) => {
+					data.filter(item => item?.title.toLowerCase().includes(searchProducts?.search?.toLowerCase())).map((item) => {
 
 						return (
 							<Card

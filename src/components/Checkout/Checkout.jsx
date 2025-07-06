@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, updateCart } from "../../redux/slices/cartSlice";
 import Form from "../Checkout/Form";
+import { Helmet } from "react-helmet";
 
 const Checkout = () => {
 	const { cart, numOfCartItems, totalCartPrice, isLoadingUpdateCart, isLoadingDeleteCart } = useSelector((store) => store.cartReducer);
 	const dispatch = useDispatch();
-	return (
+	return <>
+		<Helmet>
+			<title>Check Out</title>
+		</Helmet>
 		<div className="container mx-auto flex flex-col gap-2 py-10 lg:flex-row">
 			<div className="flex-1 space-y-10">
 				<Form/>
@@ -68,7 +72,6 @@ const Checkout = () => {
 				</div>
 			</div>
 		</div>
-	);
-};
-
+	</>
+}
 export default Checkout;
